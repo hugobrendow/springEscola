@@ -1,25 +1,33 @@
 package com.itau.escolaItauSpring.service;
 
+import com.itau.escolaItauSpring.config.mapper.AlunoMapper;
 import com.itau.escolaItauSpring.dto.request.AlunoRequest;
+import com.itau.escolaItauSpring.dto.response.AlunoResponse;
 import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.repository.AlunoRepository;
 import com.itau.escolaItauSpring.repository.MemoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AlunoService {
-    private MemoryRepository<UUID, Aluno> repository = new AlunoRepository();
 
-    public Aluno adicionar(AlunoRequest alunoRequest) {
-        Aluno aluno = new Aluno(alunoRequest);
-        return repository.adicionar(aluno);
+    private final AlunoMapper mapper;
+
+    private final MemoryRepository<UUID, Aluno> repository;
+
+    public AlunoResponse adicionar(AlunoRequest alunoRequest) {
+        Aluno aluno = mapper.toModel(alunoRequest);
+        return mapper.toResponse(repository.adicionar(aluno));
     }
 
-    public void ativar(Aluno aluno) throws ItemNaoExistenteException {
+    public void ativar(UUID id) throws ItemNaoExistenteException {
+        Aluno aluno = repository.localizar(id);
         aluno.setAtivado(true);
         repository.alterar(aluno.getId(), aluno);
     }
@@ -29,11 +37,12 @@ public class AlunoService {
         repository.alterar(aluno.getId(), aluno);
     }
 
-    public List<Aluno> listar() {
-        return repository.listar();
+    public List<AlunoResponse> listar() {
+        return mapper.mapAluno(repository.listar());
     }
 
-    public Aluno localizar(UUID id) {
-        return repository.localizar(id);
+    public AlunoResponse localizar(UUID id) {
+        return mapper.toResponse(repository.localizar(id));
     }
+
 }

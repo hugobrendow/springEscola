@@ -2,7 +2,7 @@ package com.itau.escolaItauSpring.model;
 
 
 import com.itau.escolaItauSpring.dto.request.AlunoRequest;
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +16,8 @@ public class Aluno {
     private Integer idade;
     private Long cpf;
     private Boolean ativado;
-    public Integer[] notas;
-
+    public  Integer[] notas;
+    private Curso curso;
     public Aluno(){}
 
     public Aluno(AlunoRequest alunoRequest){
