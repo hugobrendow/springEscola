@@ -7,4 +7,9 @@ import lombok.Setter;
 public class Curso {
     private Long id;
     private String nome;
+    // Turno -> ENUM
+    // Professor
+    // Carga Horária
+    // Data término
+    // Ementa -> OUTRO OBJETO
 }

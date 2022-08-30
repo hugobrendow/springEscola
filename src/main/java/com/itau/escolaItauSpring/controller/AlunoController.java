@@ -36,8 +36,8 @@ public class AlunoController {
         return ResponseEntity.created(uri).body(alunoResponse);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscarAluno(@PathVariable UUID id){
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> buscarAluno(@PathVariable UUID id) throws ItemNaoExistenteException {
         return ResponseEntity.ok(alunoService.localizar(id));
     }
 
@@ -45,5 +45,21 @@ public class AlunoController {
     public ResponseEntity<String> ativarAluno(@PathVariable UUID id) throws ItemNaoExistenteException {
         alunoService.ativar(id);
         return ResponseEntity.accepted().body("Aluno ativado");
+    }
+
+    @GetMapping("/quantidade-ativo")
+    public ResponseEntity<Long> listarQuantidadeAtivos() {
+        return ResponseEntity.ok().body(alunoService.quantidadeAlunosAtivo());
+    }
+
+    @DeleteMapping("/cpf/{cpf}")
+    public ResponseEntity removerPorCpf(@PathVariable Long cpf) {
+        alunoService.removerPorCpf(cpf);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/busca/{nome}")
+    public ResponseEntity buscarPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok(alunoService.buscarPorNome(nome));
     }
 }

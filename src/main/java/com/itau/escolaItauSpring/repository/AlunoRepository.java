@@ -1,20 +1,23 @@
 package com.itau.escolaItauSpring.repository;
 
 import com.itau.escolaItauSpring.model.Aluno;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class AlunoRepository extends MemoryRepository<UUID, Aluno> {
+public interface AlunoRepository extends JpaRepository<Aluno, UUID> {
+    Long countAlunoByAtivado(Boolean ativado);
+    @Transactional
+    void deleteByCpf(Long cpf);
 
-    @Override
-    protected UUID novaChave() {
-        return UUID.randomUUID();
-    }
+    List<Aluno> findByNomeContainingIgnoreCase(String nome);
 
-    @Override
-    protected void setChave(Aluno item, UUID chave) {
-        item.setId(chave);
-    }
+    // JPQL
+    @Query("select aluno from Aluno aluno where aluno.cpf = :cpf and aluno.nome like :nome")
+    Aluno buscarPorCpfENome(Long cpf, String nome);
 }
