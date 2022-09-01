@@ -4,6 +4,7 @@ package com.itau.escolaItauSpring.controller;
 import com.itau.escolaItauSpring.dto.request.AlunoRequest;
 import com.itau.escolaItauSpring.dto.response.AlunoResponse;
 import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
+import com.itau.escolaItauSpring.model.Endereco;
 import com.itau.escolaItauSpring.service.AlunoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -7,21 +7,14 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
-
 @Entity
-@Getter @Setter
-public class Curso {
+@Getter
+@Setter
+public class Professor {
     @Id
     @GeneratedValue
     @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
     private String nome;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Professor professor;
-    // Turno -> ENUM
-    // Professor
-    // Carga Horária
-    // Data término
-    // Ementa -> OUTRO OBJETO
+    private String cpf;
 }

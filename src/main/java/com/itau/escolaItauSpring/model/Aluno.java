@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -28,8 +26,19 @@ public class Aluno {
     private Long cpf;
     @Column(name = "IS_ATIVO")
     private Boolean ativado;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ENDERECO_ID")
+    private Endereco endereco;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ALUNO_ID")
+    private List<Nota> notas;
+
 //    public  Integer[] notas;
-//    private Curso curso;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ALUNO_ID")
+    private List<Curso> cursos;
     public Aluno(){}
 
     public Aluno(AlunoRequest alunoRequest){
