@@ -1,56 +1,34 @@
 package com.itau.escolaItauSpring.model;
 
 
-import com.itau.escolaItauSpring.dto.request.AlunoRequest;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @Entity
+@NoArgsConstructor
 public class Aluno {
     @Id
     @GeneratedValue
     @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
-    @Column(name = "NOME", nullable = false, length = 200, unique = false)
-    private String nome;
-    @Column(name = "IDADE")
-    private Integer idade;
-    @Column(name = "CPF", nullable = false, unique = true)
-    private Long cpf;
-    @Column(name = "IS_ATIVO")
-    private Boolean ativado;
 
+    // TODO mostrar na próxima aula como é criado
+    @Column(nullable = false, length = 200)
+    private String nome;
+    private LocalDate dataNascimento;
+    @Column(nullable = false, unique = true, length = 11)
+    private String cpf;
+    @Column(nullable = false, unique = true)
+    private String email;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ENDERECO_ID")
     private Endereco endereco;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ALUNO_ID")
-    private List<Nota> notas;
-
-//    public  Integer[] notas;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ALUNO_ID")
-    private List<Curso> cursos;
-    public Aluno(){}
-
-    public Aluno(AlunoRequest alunoRequest){
-        this.nome = alunoRequest.getNome();
-        this.idade = alunoRequest.getIdade();
-        this.cpf = alunoRequest.getCpf();
-        this.ativado = true;
-    }
-    public void exibirNotas(){
-//        for(int i = 0; i < this.notas.length; i++){
-//            System.out.println(notas[i]);
-//        }
-    }
 }
 

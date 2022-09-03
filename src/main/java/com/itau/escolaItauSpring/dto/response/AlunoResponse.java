@@ -1,11 +1,9 @@
 package com.itau.escolaItauSpring.dto.response;
 
-import com.itau.escolaItauSpring.model.Aluno;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -13,8 +11,7 @@ import java.util.UUID;
 public class AlunoResponse {
     private UUID id;
     private String nome;
-    private Integer idade;
-    private Long cpf;
-    private CursoResponse curso;
-
+    private LocalDate dataNascimento;
+    private String telefone;
+    private String email;
 }

@@ -1,18 +1,29 @@
 package com.itau.escolaItauSpring.dto.request;
 
-import com.itau.escolaItauSpring.model.Curso;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.hibernate.validator.constraints.br.CPF;
 
-import java.util.List;
-import java.util.UUID;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
-@Getter @Setter
+@Data
 public class AlunoRequest {
+    @NotBlank
     private String nome;
-    private Integer idade;
-    private Long cpf;
-    private List<CursoRequest> cursos;
+    @NotNull
+    private LocalDate dataNascimento;
+    // TODO aplicar validação do CPF
+    @CPF
+    private String cpf;
+
+    // TODO criar uma regex com anotação para validação de telefone
+    @NotBlank
+    private String telefone;
+    @NotBlank
+    @Email
+    private String email;
+    @NotNull
     private EnderecoRequest endereco;
-    private List<NotaRequest> notas;
 }
