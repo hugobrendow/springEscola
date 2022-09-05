@@ -19,11 +19,11 @@ public interface AlunoMapper {
 
     Aluno toModel(AlunoRequest alunoRequest);
 
-    List<AlunoResponse> mapAluno(List<Aluno> alunos);
+    List<AlunoResponse> toResponseList(List<Aluno> alunos);
 
-    @InheritInverseConfiguration
-    CursoResponse campoToResponse(Curso curso);
-
-    @InheritInverseConfiguration
-    Curso requestToModel(CursoRequest cursoRequest);
+//    @InheritInverseConfiguration
+//    CursoResponse campoToResponse(Curso curso);
+//
+//    @InheritInverseConfiguration
+//    Curso requestToModel(CursoRequest cursoRequest);
 }

@@ -1,4 +1,4 @@
 package com.itau.escolaItauSpring.exception;
 
-public class ItemNaoExistenteException extends Throwable {
+public class ItemNaoExistenteException extends RuntimeException {
 }

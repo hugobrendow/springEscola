@@ -25,12 +25,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
-    @Override
+    @ExceptionHandler(value = {ItemNaoExistenteException.class})
+    protected ResponseEntity<Object> handleItemNotFound(RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Elemento não encontrado"), HttpStatus.NOT_FOUND.value());
+        return handleExceptionInternal(ex, exceptionDetail,
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+    /*@Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> detalhes = ex.getBindingResult().getAllErrors().stream()
                 .map(obj -> obj.getDefaultMessage())
                 .collect(Collectors.toList());
         return handleExceptionInternal(ex, new CustomException(detalhes, HttpStatus.BAD_REQUEST.value()),
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
-    }
+    }*/
 }

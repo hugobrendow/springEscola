@@ -1,10 +1,12 @@
 package com.itau.escolaItauSpring.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter @Setter
+import javax.validation.constraints.NotBlank;
+
+@Data
 public class CursoRequest {
+    @NotBlank(message = "O nome deve ser informado")
     private String nome;
-    private ProfessorRequest professor;
+    private String descricao;
 }
