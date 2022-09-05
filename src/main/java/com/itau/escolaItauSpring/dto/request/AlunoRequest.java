@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -13,8 +14,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class AlunoRequest {
-    @NotNull
-    @NotBlank(message = "O nome não pode ser vazio")
+    @NotNull(message = "O nome não pode ser vazio")
+    @Min(value = 3, message = "O nome deve ter no mínimo 3 caracteres")
     private String nome;
     @JsonFormat(pattern="dd-MM-yyyy")
     @NotNull(message = "A data de nascimento não pode ser nula")
@@ -24,9 +25,9 @@ public class AlunoRequest {
     private String cpf;
 
     // TODO criar uma regex com anotação para validação de telefone
-    @NotBlank(message = "O telefone não pode ser vazio")
+    @NotNull(message = "O telefone não pode ser vazio")
     private String telefone;
-    @NotBlank
+    @NotNull
     @Email
     private String email;
     @NotNull

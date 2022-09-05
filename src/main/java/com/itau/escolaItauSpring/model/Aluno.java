@@ -24,6 +24,7 @@ public class Aluno {
     private LocalDate dataNascimento;
     @Column(nullable = false, unique = true, length = 11)
     private String cpf;
+    private String telefone;
     @Column(nullable = false, unique = true)
     private String email;
     @OneToOne(cascade = CascadeType.ALL)

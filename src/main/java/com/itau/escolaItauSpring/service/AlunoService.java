@@ -8,8 +8,6 @@ import com.itau.escolaItauSpring.repository.AlunoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
-
 @Service
 @RequiredArgsConstructor
 public class AlunoService {
@@ -17,7 +15,7 @@ public class AlunoService {
     private final AlunoMapper mapper;
     private final AlunoRepository repository;
 
-    public AlunoResponse adicionar(@Valid AlunoRequest alunoRequest) {
+    public AlunoResponse adicionar(AlunoRequest alunoRequest) {
         Aluno aluno = mapper.toModel(alunoRequest);
         return mapper.toResponse(repository.save(aluno));
     }
