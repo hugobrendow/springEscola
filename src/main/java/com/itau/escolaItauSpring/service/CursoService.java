@@ -7,6 +7,9 @@ import com.itau.escolaItauSpring.mapper.CursoMapper;
 import com.itau.escolaItauSpring.model.Curso;
 import com.itau.escolaItauSpring.repository.CursoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,9 +26,10 @@ public class CursoService {
         return mapper.toResponse(repository.save(curso));
     }
 
-    public List<CursoResponse> listar() {
-        List<Curso> cursos = repository.findAll();
-        return mapper.toResponseList(cursos);
+    public Page<CursoResponse> listar(Pageable pageable) {
+        Page<Curso> cursos = repository.findAll(pageable);
+        List<CursoResponse> cursoResponses = mapper.toResponseList(cursos.getContent());
+        return new PageImpl<>(cursoResponses, pageable, cursoResponses.size());
     }
 
     public CursoResponse buscarPorId(UUID id) {
@@ -41,6 +45,10 @@ public class CursoService {
         repository.deleteById(id);
     }
 
+    public List<CursoResponse> filtrar(String nome, Pageable pageable) {
+        Page<Curso> cursosPage = repository.findByNome(nome, pageable);
+        return mapper.toResponseList(cursosPage.getContent());
+    }
     private Curso findById(UUID id) {
         return repository.findById(id).orElseThrow(ItemNaoExistenteException::new);
     }
