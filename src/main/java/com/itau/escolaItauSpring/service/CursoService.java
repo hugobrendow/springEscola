@@ -49,7 +49,7 @@ public class CursoService {
         Page<Curso> cursosPage = repository.findByNome(nome, pageable);
         return mapper.toResponseList(cursosPage.getContent());
     }
-    private Curso findById(UUID id) {
+    public Curso findById(UUID id) {
         return repository.findById(id).orElseThrow(ItemNaoExistenteException::new);
     }
 }

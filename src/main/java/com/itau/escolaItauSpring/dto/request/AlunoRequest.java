@@ -1,13 +1,13 @@
 package com.itau.escolaItauSpring.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.itau.escolaItauSpring.config.Telefone;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -25,7 +25,7 @@ public class AlunoRequest {
     private String cpf;
 
     // TODO criar uma regex com anotação para validação de telefone
-    @NotNull(message = "O telefone não pode ser vazio")
+    @Telefone
     private String telefone;
     @NotNull
     @Email
