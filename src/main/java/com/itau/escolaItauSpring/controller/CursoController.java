@@ -5,6 +5,11 @@ import com.itau.escolaItauSpring.dto.request.CursoRequest;
 import com.itau.escolaItauSpring.dto.response.CursoResponse;
 import com.itau.escolaItauSpring.service.CursoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -28,8 +33,8 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CursoResponse>> listar() {
-        List<CursoResponse> cursos = service.listar();
+    public ResponseEntity<Page<CursoResponse>> listar(@PageableDefault(size = 5, page = 0, direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<CursoResponse> cursos = service.listar(pageable);
         return ResponseEntity.ok(cursos);
     }
 
@@ -45,5 +50,15 @@ public class CursoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<CursoResponse>> filtrar(
+            @RequestParam String nome,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "7") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<CursoResponse> cursos = service.filtrar(nome, pageable);
+        return ResponseEntity.ok(cursos);
+    }
     // TODO atualizar curso
 }
