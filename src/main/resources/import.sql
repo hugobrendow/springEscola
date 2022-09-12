@@ -1,0 +1,10 @@
+INSERT INTO Curso VALUES(random_uuid(), 'Java 1', 'Java basico 1');
+INSERT INTO Curso VALUES(random_uuid(), 'Java 2', 'Java basico 2');
+INSERT INTO Curso VALUES(random_uuid(), 'PHP 1', 'PHP basico 1');
+INSERT INTO Curso VALUES(random_uuid(), 'PHP 2', 'PHP basico 2');
+INSERT INTO Curso VALUES(random_uuid(), 'Java JSP 1', 'JSP basico 1');
+INSERT INTO Curso VALUES(random_uuid(), 'Java JSP 2', 'JSP basico 2');
+INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 1', 'Spring Boot basico 1');
+INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 2', 'Spring Boot basico 2');
+INSERT INTO Curso VALUES(random_uuid(), 'SQL 1', 'SQL Básico 1');
+INSERT INTO Curso VALUES(random_uuid(), 'COBOL 1', 'COBOL Básico 1');
