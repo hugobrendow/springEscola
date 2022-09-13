@@ -33,4 +33,9 @@ public class AlunoService {
                 .orElseThrow(ItemNaoExistenteException::new);
         return mapper.toResponse(aluno);
     }
+
+    public void remover(UUID id) {
+        this.buscarPorId(id);
+        repository.deleteById(id);
+    }
 }
