@@ -2,13 +2,12 @@ package com.itau.escolaItauSpring.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -21,11 +20,14 @@ public class Matricula {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numero;
 
+    @ColumnDefault("true")
     private Boolean status;
 
-    private Date data;
+    @CreationTimestamp
+    private LocalDate data;
 
     @ManyToOne
     private Aluno aluno;

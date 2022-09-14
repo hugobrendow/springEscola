@@ -1,13 +1,17 @@
 package com.itau.escolaItauSpring.service;
 
 import com.itau.escolaItauSpring.dto.request.TurmaRequest;
+import com.itau.escolaItauSpring.dto.response.AlunoResponse;
 import com.itau.escolaItauSpring.dto.response.TurmaResponse;
+import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.mapper.TurmaMapper;
 import com.itau.escolaItauSpring.model.Curso;
 import com.itau.escolaItauSpring.model.Turma;
 import com.itau.escolaItauSpring.repository.TurmaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +26,11 @@ public class TurmaService {
         Turma turma = turmaMapper.toModel(turmaRequest);
         turma.setCurso(curso);
         return turmaMapper.toResponse(turmaRepository.save(turma));
+    }
+
+        public TurmaResponse buscarPorId(UUID id) {
+        Turma turma = turmaRepository.findById(id)
+                .orElseThrow(ItemNaoExistenteException::new);
+        return turmaMapper.toResponse(turma);
     }
 }
