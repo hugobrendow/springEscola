@@ -109,6 +109,19 @@ public class OcorrenciaControllerUnitTest {
         Mockito.verify(ocorrenciaService, Mockito.times(1)).registrarOcorrencia(ArgumentMatchers.any(OcorrenciaRequest.class));
     }
 
+    @DisplayName(value = "Editar ocorrencia")
+    @Test
+    void testeEditarOcorrencia() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(ocorrenciaRequest);
+
+        ResultActions result = this.mockMvc.perform(put("/ocorrencia/{id}", idExistente)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk());
+    }
+
     @DisplayName(value = "Deletar ocorrência por ID")
     @Test
     void testeDeletarOcorrencia() throws Exception {
