@@ -27,5 +27,4 @@ public class MatriculaController {
         URI uri = uriComponentsBuilder.path("/Matricula/{id}").buildAndExpand(matriculaResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(matriculaResponse);
     }
-    
 }

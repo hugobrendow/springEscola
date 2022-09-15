@@ -30,13 +30,17 @@ public class AlunoService {
     }
 
     public AlunoResponse buscarPorId(UUID id) {
-        Aluno aluno = repository.findById(id)
-                .orElseThrow(ItemNaoExistenteException::new);
+        Aluno aluno = buscarModelPorId(id);
         return mapper.toResponse(aluno);
     }
 
     public void remover(UUID id) {
         this.buscarPorId(id);
         repository.deleteById(id);
+    }
+
+    public Aluno buscarModelPorId(UUID id){
+        return repository.findById(id)
+                .orElseThrow(ItemNaoExistenteException::new);
     }
 }

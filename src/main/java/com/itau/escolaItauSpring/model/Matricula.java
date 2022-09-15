@@ -1,5 +1,7 @@
 package com.itau.escolaItauSpring.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,6 +15,8 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Matricula {
 
     @Id
@@ -35,4 +39,8 @@ public class Matricula {
     @ManyToOne
     private Turma turma;
 
+    public Matricula (Aluno aluno, Turma turma){
+        this.aluno = aluno;
+        this.turma = turma;
+    }
 }

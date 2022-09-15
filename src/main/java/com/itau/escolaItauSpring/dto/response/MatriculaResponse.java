@@ -15,4 +15,8 @@ public class MatriculaResponse {
     private Boolean status;
 
     private LocalDate data;
+
+    private AlunoResponse aluno;
+
+    private TurmaResponse turma;
 }

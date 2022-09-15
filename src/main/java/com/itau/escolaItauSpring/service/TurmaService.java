@@ -28,9 +28,13 @@ public class TurmaService {
         return turmaMapper.toResponse(turmaRepository.save(turma));
     }
 
-        public TurmaResponse buscarPorId(UUID id) {
-        Turma turma = turmaRepository.findById(id)
-                .orElseThrow(ItemNaoExistenteException::new);
+    public TurmaResponse buscarPorId(UUID id) {
+        Turma turma = buscaModelPorId(id);
         return turmaMapper.toResponse(turma);
+    }
+
+    public Turma buscaModelPorId(UUID id){
+        return turmaRepository.findById(id)
+                .orElseThrow(ItemNaoExistenteException::new);
     }
 }
