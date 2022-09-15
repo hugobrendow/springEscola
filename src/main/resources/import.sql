@@ -15,3 +15,9 @@ insert into Usuario (id, account_non_expired, account_non_locked, credentials_no
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'jack', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_COORDENADOR');
+
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'POO 1', 20);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'POO 2', 20);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 1', 30);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 2', 40);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 3', 60);
