@@ -1,29 +1,28 @@
 package com.itau.escolaItauSpring.model;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Disciplina {
+public class CursoDisciplina {
     @Id
     @GeneratedValue
     @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
-    @Column(nullable = false, unique = true)
-    private String nome;
-    private Integer cargaHoraria;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "DISCIPLINA_ID")
+    private Disciplina disciplina;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "CURSO_ID")
+    private Curso curso;
 }
