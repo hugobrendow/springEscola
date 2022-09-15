@@ -52,7 +52,7 @@ public class ProfessorService {
     }
 
     public List<ProfessorResponse> buscarPorNome(String nome) {
-        return mapper.toResponseList(repository.findByNomeLikeIgnoreCase(nome));
+        return mapper.toResponseList(repository.findByNomeLikeIgnoreCase("%" + nome +"%"));
     }
     
 }

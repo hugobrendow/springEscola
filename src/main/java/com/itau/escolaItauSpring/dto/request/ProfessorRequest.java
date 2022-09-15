@@ -28,7 +28,7 @@ public class ProfessorRequest {
     @NotBlank
     private String telefone;
     @NotNull(message = "A data de admissão não pode ser nula")
-    @JsonFormat(pattern = "dd-MM-YYYY")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataAdmissao;
     @NotNull(message = "O nível do professor não pode ser nulo")
     private NivelProfessorEnum nivel;
