@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -31,4 +28,8 @@ public class Professor {
     private String telefone;
     private LocalDate dataAdmissao;
     private NivelProfessorEnum nivel;
+    @Column(nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    private Endereco endereco;
+    //TODO PROFESSOR_CURSO_DISCIPLINA
 }

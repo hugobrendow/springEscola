@@ -32,5 +32,6 @@ public class ProfessorRequest {
     private LocalDate dataAdmissao;
     @NotNull(message = "O nível do professor não pode ser nulo")
     private NivelProfessorEnum nivel;
-
+    @NotNull
+    private EnderecoRequest endereco;
 }
