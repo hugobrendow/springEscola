@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.model;
 
+import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
@@ -29,5 +30,5 @@ public class Professor {
     @Column(nullable = false, unique = true)
     private String telefone;
     private LocalDate dataAdmissao;
-    // TODO precisa de nivel?
+    private NivelProfessorEnum nivel;
 }

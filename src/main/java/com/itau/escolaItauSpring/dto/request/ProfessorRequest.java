@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itau.escolaItauSpring.config.Telefone;
+import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
@@ -29,6 +30,7 @@ public class ProfessorRequest {
     @NotNull(message = "A data de admissão não pode ser nula")
     @JsonFormat(pattern = "dd-MM-YYYY")
     private LocalDate dataAdmissao;
-    // TODO precisa de nivel?
+    @NotNull(message = "O nível do professor não pode ser nulo")
+    private NivelProfessorEnum nivel;
 
 }

@@ -1,6 +1,6 @@
 package com.itau.escolaItauSpring.dto.response;
 
-import lombok.Data;
+import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +13,5 @@ public class ProfessorResponse {
     private String nome;
     private String email;
     private String telefone;
-    // TODO precisa de nivel?
+    private NivelProfessorEnum nivel;
 }
