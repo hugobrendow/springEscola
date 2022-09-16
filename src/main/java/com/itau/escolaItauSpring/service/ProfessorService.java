@@ -7,6 +7,8 @@ import com.itau.escolaItauSpring.mapper.ProfessorMapper;
 import com.itau.escolaItauSpring.model.Professor;
 import com.itau.escolaItauSpring.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +22,7 @@ public class ProfessorService {
 
     public ProfessorResponse adicionar(ProfessorRequest professorRequest){
         Professor professor = mapper.toModel(professorRequest);
-        professor = repository.save(professor);
-        return mapper.toResponse(professor);
+        return mapper.toResponse(repository.save(professor));
     }
 
     public List<ProfessorResponse> listar() {
@@ -51,8 +52,9 @@ public class ProfessorService {
         return mapper.toResponse(professor);
     }
 
-    public List<ProfessorResponse> buscarPorNome(String nome) {
-        return mapper.toResponseList(repository.findByNomeLikeIgnoreCase("%" + nome +"%"));
+    public List<ProfessorResponse> buscarPorNome(String nome, Pageable pageable) {
+        Page<Professor> professoresPage = repository.findByNomeLikeIgnoreCase("%" + nome +"%", pageable);
+        return mapper.toResponseList(professoresPage.getContent());
     }
     
 }

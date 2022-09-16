@@ -1,9 +1,15 @@
 package com.itau.escolaItauSpring.controller;
 
+import com.itau.escolaItauSpring.dto.exception.CustomException;
 import com.itau.escolaItauSpring.dto.request.ProfessorRequest;
 import com.itau.escolaItauSpring.dto.response.ProfessorResponse;
 import com.itau.escolaItauSpring.service.ProfessorService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,40 +26,79 @@ import java.util.UUID;
 public class ProfessorController {
     private final ProfessorService professorService;
 
+    @ApiOperation(value = "Cadastrar novo professor")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Professor cadastrado com sucesso", response = ProfessorResponse.class),
+        @ApiResponse(code = 400, message = "Informações inválidas, verifique e tente novamente", response = CustomException.class),
+        @ApiResponse(code = 401, message = "Usuário não possui permissão para este método"),
+        @ApiResponse(code = 500, message = "Erro interno", response = CustomException.class)
+    })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<ProfessorResponse> cadastrar(@Valid @RequestBody ProfessorRequest professorRequest, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<ProfessorResponse> cadastrar(@Valid @RequestBody ProfessorRequest professorRequest,
+                                                       UriComponentsBuilder uriComponentsBuilder) {
         ProfessorResponse professorResponse = professorService.adicionar(professorRequest);
         URI uri = uriComponentsBuilder.path("/professor/{id}").buildAndExpand(professorResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(professorResponse);
     }
 
+    @ApiOperation(value = "Buscar professor por ID")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Professor encontrado com sucesso", response = ProfessorResponse.class),
+        @ApiResponse(code = 404, message = "Professor não encontrado", response = CustomException.class),
+        @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
     @GetMapping("/{id}")
     public ResponseEntity<ProfessorResponse> buscarPorId(@PathVariable UUID id) {
         ProfessorResponse professorResponse = professorService.buscarPorId(id);
         return ResponseEntity.ok(professorResponse);
     }
 
+    @ApiOperation(value = "Remover professor")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Professor removido com sucesso", response = ProfessorResponse.class),
+        @ApiResponse(code = 400, message = "Professor não encontrado", response = CustomException.class),
+        @ApiResponse(code = 401, message = "Usuário não possuí permissão para este método"),
+        @ApiResponse(code = 500, message = "Erro interno", response = CustomException.class) })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable UUID id) {
         professorService.removerProfessor(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Atualizar professor")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Professor atualizado com sucesso", response = ProfessorResponse.class),
+        @ApiResponse(code = 401, message = "Usuário não possui permissão para este recurso"),
+        @ApiResponse(code = 404, message = "Professor não encontrado", response = CustomException.class),
+        @ApiResponse(code = 500, message = "Erro interno", response = CustomException.class) })
     @PutMapping("/{id}")
-    public ResponseEntity<ProfessorResponse> atualizar(@PathVariable UUID id, @RequestBody @Valid ProfessorRequest professorRequest) {
+    public ResponseEntity<ProfessorResponse> atualizar(@PathVariable UUID id,
+                                                       @RequestBody @Valid ProfessorRequest professorRequest) {
         ProfessorResponse professorResponse = professorService.atualizar(id, professorRequest);
         return ResponseEntity.ok().body(professorResponse);
     }
 
+    @ApiOperation(value = "Buscar todos os professores")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Professor(es) encontrado(s) com sucesso", response = ProfessorResponse.class),
+        @ApiResponse(code = 404, message = "Professor(es) não encontrado(s)", response = CustomException.class),
+        @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
     @GetMapping
     public ResponseEntity<List<ProfessorResponse>> listagem() {
         return ResponseEntity.ok(professorService.listar());
     }
 
+    @ApiOperation(value = "Buscar pofessor por nome")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Professor(es) encontrado(s) com sucesso", response = ProfessorResponse.class),
+        @ApiResponse(code = 404, message = "Professor(es) não encontrado(s)", response = CustomException.class),
+        @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
     @GetMapping("/nome")
-    public ResponseEntity<List<ProfessorResponse>> listagemPorNome(@RequestParam String nome) {
-        List<ProfessorResponse> professorResponseList = professorService.buscarPorNome(nome);
+    public ResponseEntity<List<ProfessorResponse>> listagemPorNome(@RequestParam String nome,
+                                                                   @RequestParam(defaultValue = "0") int page,
+                                                                   @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProfessorResponse> professorResponseList = professorService.buscarPorNome(nome, pageable);
         return ResponseEntity.ok(professorResponseList);
     }
 }
