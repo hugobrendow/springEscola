@@ -18,11 +18,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MatriculaMapper {
 
-    MatriculaResponse toResponse(Matricula Matricula);
-    @InheritInverseConfiguration
-    AlunoResponse alunoToResponse(Aluno aluno);
-    @InheritInverseConfiguration
-    TurmaResponse turmaToResponse(Turma turma);
-
+    @Mapping(source = "matricula.aluno.id", target = "idAluno")
+    @Mapping(source = "matricula.turma.id", target = "idTurma")
+    MatriculaResponse toResponse(Matricula matricula);
 
 }

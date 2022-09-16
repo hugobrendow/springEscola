@@ -17,27 +17,8 @@ public class MatriculaResponse {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
 
-    private DadosAluno aluno;
+    private UUID idAluno;
 
-    private DadosTurma turma;
+    private UUID idTurma;
 
-    //podemos criar um dto ou tirar de dentro de um objeto a parte
-    //adaptar o json para ficar explícito a qual id se refere
-    public class DadosAluno {
-        private UUID id;
-
-        private String nome;
-    }
-
-    //devolver id da turma e nome do curso
-    public class DadosTurma {
-        private UUID id;
-        private String turno;
-        @JsonFormat(pattern="dd-MM-yyyy")
-        private LocalDate dataInicio;
-        @JsonFormat(pattern="dd-MM-yyyy")
-        private LocalDate dataFim;
-        private String codigoTurma;
-        private CursoResponse curso;
-    }
 }
