@@ -2,49 +2,74 @@ package com.itau.escolaItauSpring.service;
 
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
+import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.model.Ocorrencia;
+import com.itau.escolaItauSpring.repository.AlunoRepository;
 import com.itau.escolaItauSpring.repository.OcorrenciaRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class OcorrenciaServiceIntegrationTest {
 
-    @Autowired
-    private OcorrenciaRepository ocorrenciaRepository;
+
+    private final OcorrenciaRepository ocorrenciaRepository;
+    private final OcorrenciaService ocorrenciaService;
+    private final AlunoRepository alunoRepository;
 
     @Autowired
-    private OcorrenciaService ocorrenciaService;
+    public OcorrenciaServiceIntegrationTest(OcorrenciaRepository ocorrenciaRepository, OcorrenciaService ocorrenciaService, AlunoRepository alunoRepository) {
+        this.ocorrenciaRepository = ocorrenciaRepository;
+        this.ocorrenciaService = ocorrenciaService;
+        this.alunoRepository = alunoRepository;
+    }
 
     private static Ocorrencia ocorrencia;
     private static OcorrenciaRequest ocorrenciaRequest;
+    private static Aluno aluno;
 
     @BeforeAll
     public static void setUp() {
         ocorrencia = new Ocorrencia();
         ocorrencia.setDescricao("Teste");
-        ocorrencia.setDataHora(LocalDateTime.parse("15-09-2022 19:45:00"));
+        ocorrencia.setDataHora(LocalDateTime.of(2022, 9, 15, 15, 15, 15));
         ocorrencia.setAluno(null);
 
         ocorrenciaRequest = new OcorrenciaRequest();
         ocorrenciaRequest.setDescricao("Teste de requisição");
-        ocorrenciaRequest.setDataHora(LocalDateTime.parse("15-09-2022 19:45:00"));
+        ocorrenciaRequest.setDataHora(LocalDateTime.of(2022, 9, 15, 15, 15, 15));
         ocorrenciaRequest.setAlunoId(null);
+
+        aluno = new Aluno();
+        aluno.setNome("José");
+        aluno.setCpf("12345678911");
+        aluno.setEmail("test@test.com");
+        aluno.setTelefone("12920000002");
+        aluno.setEndereco(null);
+        aluno.setDataNascimento(LocalDate.of(1990, 10, 10));
+    }
+
+    @BeforeEach
+    void setUpEach(){
+        aluno = alunoRepository.save(aluno);
+        ocorrencia = ocorrenciaRepository.save(ocorrencia);
     }
 
     @AfterEach
     void tearDown() {
-        ocorrenciaRepository.deleteAll();
+        ocorrenciaRepository.delete(ocorrencia);
+        alunoRepository.delete(aluno);
     }
 
     @DisplayName("Busca as ocorrências no banco")
     @Test
     void buscarOcorrencias() {
-        ocorrenciaRepository.save(ocorrencia);
         List<OcorrenciaResponse> ocorrenciaList = ocorrenciaService.buscarOcorrencias();
 
         Assertions.assertEquals(1, ocorrenciaList.size());
@@ -53,16 +78,22 @@ class OcorrenciaServiceIntegrationTest {
     @DisplayName("Busca uma ocorrência no banco")
     @Test
     void buscarOcorrencia() {
-       Ocorrencia ocorrenciaLocal = ocorrenciaRepository.save(ocorrencia);
-       OcorrenciaResponse ocorrenciaResponse = ocorrenciaService.buscarOcorrencia(ocorrenciaLocal.getId());
+        OcorrenciaResponse ocorrenciaResponse = ocorrenciaService.buscarOcorrencia(ocorrencia.getId());
 
-       Assertions.assertEquals(ocorrenciaLocal.getId(), ocorrenciaResponse.getId());
+        Assertions.assertEquals(ocorrencia.getId(), ocorrenciaResponse.getId());
     }
 
     @DisplayName("Registra uma ocorrência")
     @Test
     void registrarOcorrencia() {
-        OcorrenciaResponse ocorrenciaResponse = ocorrenciaService.registrarOcorrencia(ocorrenciaRequest);
+        ocorrenciaRequest.setAlunoId(aluno.getId());
+
+        OcorrenciaResponse ocorrenciaSalva = ocorrenciaService.registrarOcorrencia(ocorrenciaRequest);
+
+        Assertions.assertNotNull(ocorrenciaSalva.getId());
+        Assertions.assertEquals(aluno.getId(), ocorrenciaSalva.getAluno().getId());
+
+        ocorrenciaRepository.deleteById(ocorrenciaSalva.getId());
     }
 
     @Test
