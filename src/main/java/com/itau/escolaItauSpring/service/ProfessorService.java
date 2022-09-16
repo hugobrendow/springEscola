@@ -25,8 +25,9 @@ public class ProfessorService {
         return mapper.toResponse(repository.save(professor));
     }
 
-    public List<ProfessorResponse> listar() {
-        return mapper.toResponseList(repository.findAll());
+    public List<ProfessorResponse> listar(Pageable pageable) {
+        Page<Professor> professores= repository.findAll(pageable);
+        return mapper.toResponseList(professores.getContent());
     }
 
     public void removerProfessor(UUID id) {

@@ -84,8 +84,10 @@ public class ProfessorController {
         @ApiResponse(code = 404, message = "Professor(es) não encontrado(s)", response = CustomException.class),
         @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
     @GetMapping
-    public ResponseEntity<List<ProfessorResponse>> listagem() {
-        return ResponseEntity.ok(professorService.listar());
+    public ResponseEntity<List<ProfessorResponse>> listagem(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(professorService.listar(pageable));
     }
 
     @ApiOperation(value = "Buscar pofessor por nome")
