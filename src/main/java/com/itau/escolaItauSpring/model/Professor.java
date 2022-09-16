@@ -30,5 +30,4 @@ public class Professor {
 
     private Endereco endereco;
     private NivelProfessorEnum nivel;
-    //TODO PROFESSOR_CURSO_DISCIPLINA
 }

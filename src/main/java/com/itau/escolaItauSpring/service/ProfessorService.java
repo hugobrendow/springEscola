@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.service;
 
 import com.itau.escolaItauSpring.dto.request.ProfessorRequest;
 import com.itau.escolaItauSpring.dto.response.ProfessorResponse;
+import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
 import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.mapper.ProfessorMapper;
 import com.itau.escolaItauSpring.model.Professor;
@@ -53,8 +54,8 @@ public class ProfessorService {
         return mapper.toResponse(professor);
     }
 
-    public List<ProfessorResponse> buscarPorNome(String nome, Pageable pageable) {
-        Page<Professor> professoresPage = repository.findByNomeLikeIgnoreCase("%" + nome +"%", pageable);
+    public List<ProfessorResponse> filtro(String nome, String cpf, NivelProfessorEnum nivel, Pageable pageable) {
+        Page<Professor> professoresPage = repository.findProfessorByParam(nome, cpf, nivel, pageable);
         return mapper.toResponseList(professoresPage.getContent());
     }
     

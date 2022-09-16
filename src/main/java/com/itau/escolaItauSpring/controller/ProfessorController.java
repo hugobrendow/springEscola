@@ -3,6 +3,7 @@ package com.itau.escolaItauSpring.controller;
 import com.itau.escolaItauSpring.dto.exception.CustomException;
 import com.itau.escolaItauSpring.dto.request.ProfessorRequest;
 import com.itau.escolaItauSpring.dto.response.ProfessorResponse;
+import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
 import com.itau.escolaItauSpring.service.ProfessorService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -90,17 +91,19 @@ public class ProfessorController {
         return ResponseEntity.ok(professorService.listar(pageable));
     }
 
-    @ApiOperation(value = "Buscar pofessor por nome")
+    @ApiOperation(value = "Buscar pofessor por nome, cpf ou nivel")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Professor(es) encontrado(s) com sucesso", response = ProfessorResponse.class),
         @ApiResponse(code = 404, message = "Professor(es) não encontrado(s)", response = CustomException.class),
         @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
-    @GetMapping("/nome")
-    public ResponseEntity<List<ProfessorResponse>> listagemPorNome(@RequestParam String nome,
-                                                                   @RequestParam(defaultValue = "0") int page,
-                                                                   @RequestParam(defaultValue = "5") int size) {
+    @GetMapping("/filtro")
+    public ResponseEntity<List<ProfessorResponse>> listagemFiltro(@RequestParam(required = false) String nome,
+                                                                  @RequestParam(required = false) String cpf,
+                                                                  @RequestParam(required = false) NivelProfessorEnum nivel,
+                                                                  @RequestParam(defaultValue = "0") int page,
+                                                                  @RequestParam(defaultValue = "5") int size){
         Pageable pageable = PageRequest.of(page, size);
-        List<ProfessorResponse> professorResponseList = professorService.buscarPorNome(nome, pageable);
+        List<ProfessorResponse> professorResponseList = professorService.filtro(nome, cpf, nivel, pageable);
         return ResponseEntity.ok(professorResponseList);
     }
 }
