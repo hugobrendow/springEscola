@@ -3,7 +3,6 @@ package com.itau.escolaItauSpring.service;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
 import com.itau.escolaItauSpring.mapper.OcorrenciaMapper;
-import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.model.Ocorrencia;
 import com.itau.escolaItauSpring.repository.AlunoRepository;
 import com.itau.escolaItauSpring.repository.OcorrenciaRepository;
@@ -98,7 +97,6 @@ public class OcorrenciaServiceUnitTest {
         Mockito.when(ocorrenciaRepository.save(ocorrencia)).thenReturn(ocorrencia);
         Mockito.when(ocorrenciaMapper.toResponse(ocorrencia)).thenReturn(ocorrenciaResponse);
         Mockito.when(ocorrenciaMapper.toModel(ocorrenciaRequest)).thenReturn(ocorrencia);
-        Mockito.when(alunoRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.of(new Aluno()));
 
         OcorrenciaResponse ocorrenciaAlterada = ocorrenciaService.alterarOcorrencia(UUID.randomUUID(), ocorrenciaRequest);
 
@@ -113,5 +111,4 @@ public class OcorrenciaServiceUnitTest {
         ocorrenciaService.deletarOcorrencia(ocorrencia.getId());
         Mockito.verify(ocorrenciaRepository, Mockito.times(1)).deleteById(ocorrencia.getId());
     }
-
 }

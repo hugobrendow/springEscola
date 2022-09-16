@@ -20,7 +20,6 @@ import java.util.UUID;
 public class OcorrenciaService {
 
     private final OcorrenciaRepository ocorrenciaRepository;
-    private final AlunoRepository alunoRepository;
     private final OcorrenciaMapper ocorrenciaMapper;
 
     public List<OcorrenciaResponse> buscarOcorrencias() {
@@ -35,25 +34,19 @@ public class OcorrenciaService {
 
     public OcorrenciaResponse registrarOcorrencia(OcorrenciaRequest request) {
         Ocorrencia ocorrencia = ocorrenciaMapper.toModel(request);
-        Aluno aluno = buscarAlunoPorId(request.getAlunoId());
-        ocorrencia.setAluno(aluno);
-        return ocorrenciaMapper.toResponse(ocorrenciaRepository.save(ocorrencia));
+        ocorrencia = ocorrenciaRepository.save(ocorrencia);
+        return ocorrenciaMapper.toResponse(buscarOcorrenciaPorId(ocorrencia.getId()));
     }
 
     public OcorrenciaResponse alterarOcorrencia(UUID id, OcorrenciaRequest request) {
         Ocorrencia ocorrencia = ocorrenciaMapper.toModel(request);
-        Aluno aluno = buscarAlunoPorId(request.getAlunoId());
-        ocorrencia.setAluno(aluno);
         ocorrencia.setId(id);
-        return ocorrenciaMapper.toResponse(ocorrenciaRepository.save(ocorrencia));
+        ocorrencia = ocorrenciaRepository.save(ocorrencia);
+        return ocorrenciaMapper.toResponse(buscarOcorrenciaPorId(ocorrencia.getId()));
     }
 
     public void deletarOcorrencia(UUID id) {
         ocorrenciaRepository.deleteById(id);
-    }
-
-    private Aluno buscarAlunoPorId(UUID id) {
-        return alunoRepository.findById(id).orElseThrow(ItemNaoExistenteException::new);
     }
 
     private Ocorrencia buscarOcorrenciaPorId(UUID id) {
