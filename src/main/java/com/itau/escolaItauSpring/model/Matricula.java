@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -24,10 +23,11 @@ public class Matricula {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition="serial")
+    @Generated(GenerationTime.INSERT)
     private Long numero;
 
-    @ColumnDefault("true")
+    @Column(columnDefinition = "boolean default false")
     private Boolean status;
 
     @CreationTimestamp

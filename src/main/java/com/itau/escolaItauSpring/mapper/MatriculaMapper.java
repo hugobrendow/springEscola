@@ -23,4 +23,6 @@ public interface MatriculaMapper {
     AlunoResponse alunoToResponse(Aluno aluno);
     @InheritInverseConfiguration
     TurmaResponse turmaToResponse(Turma turma);
+
+
 }

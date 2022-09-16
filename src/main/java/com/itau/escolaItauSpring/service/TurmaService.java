@@ -1,7 +1,6 @@
 package com.itau.escolaItauSpring.service;
 
 import com.itau.escolaItauSpring.dto.request.TurmaRequest;
-import com.itau.escolaItauSpring.dto.response.AlunoResponse;
 import com.itau.escolaItauSpring.dto.response.TurmaResponse;
 import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.mapper.TurmaMapper;
@@ -29,12 +28,17 @@ public class TurmaService {
     }
 
     public TurmaResponse buscarPorId(UUID id) {
-        Turma turma = buscaModelPorId(id);
+        Turma turma = buscarModelPorId(id);
         return turmaMapper.toResponse(turma);
     }
 
-    public Turma buscaModelPorId(UUID id){
+    public Turma buscarModelPorId(UUID id){
         return turmaRepository.findById(id)
                 .orElseThrow(ItemNaoExistenteException::new);
     }
+
+    //inserir lógica para atualizar número de vagas quando uma matrícula é feita
+
+    //inserir lógica para validar se há vaga disponível
+
 }

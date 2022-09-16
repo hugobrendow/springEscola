@@ -21,11 +21,15 @@ public class MatriculaResponse {
 
     private DadosTurma turma;
 
+    //podemos criar um dto ou tirar de dentro de um objeto a parte
+    //adaptar o json para ficar explícito a qual id se refere
     public class DadosAluno {
         private UUID id;
 
         private String nome;
     }
+
+    //devolver id da turma e nome do curso
     public class DadosTurma {
         private UUID id;
         private String turno;
