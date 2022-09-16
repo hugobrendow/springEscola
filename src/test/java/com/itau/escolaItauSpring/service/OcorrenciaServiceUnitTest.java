@@ -38,8 +38,8 @@ public class OcorrenciaServiceUnitTest {
     private static OcorrenciaResponse ocorrenciaResponse;
     private static OcorrenciaRequest ocorrenciaRequest;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    void setUp() {
         ocorrencia = new Ocorrencia();
         ocorrenciaRequest = new OcorrenciaRequest();
         ocorrenciaResponse = new OcorrenciaResponse();
@@ -83,6 +83,7 @@ public class OcorrenciaServiceUnitTest {
         Mockito.when(ocorrenciaRepository.save(ocorrencia)).thenReturn(ocorrencia);
         Mockito.when(ocorrenciaMapper.toResponse(ocorrencia)).thenReturn(ocorrenciaResponse);
         Mockito.when(ocorrenciaMapper.toModel(ocorrenciaRequest)).thenReturn(ocorrencia);
+        Mockito.when(alunoRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.of(new Aluno()));
 
         OcorrenciaResponse ocorrenciaRegistrada = ocorrenciaService.registrarOcorrencia(ocorrenciaRequest);
 
