@@ -59,6 +59,7 @@ class OcorrenciaServiceIntegrationTest {
     void setUpEach(){
         aluno = alunoRepository.save(aluno);
         ocorrencia = ocorrenciaRepository.save(ocorrencia);
+        ocorrenciaRequest.setAlunoId(aluno.getId());
     }
 
     @AfterEach
@@ -69,7 +70,7 @@ class OcorrenciaServiceIntegrationTest {
 
     @DisplayName("Busca as ocorrências no banco")
     @Test
-    void buscarOcorrencias() {
+    void testBuscarOcorrencias() {
         List<OcorrenciaResponse> ocorrenciaList = ocorrenciaService.buscarOcorrencias();
 
         Assertions.assertEquals(1, ocorrenciaList.size());
@@ -77,7 +78,7 @@ class OcorrenciaServiceIntegrationTest {
 
     @DisplayName("Busca uma ocorrência no banco")
     @Test
-    void buscarOcorrencia() {
+    void testBuscarOcorrencia() {
         OcorrenciaResponse ocorrenciaResponse = ocorrenciaService.buscarOcorrencia(ocorrencia.getId());
 
         Assertions.assertEquals(ocorrencia.getId(), ocorrenciaResponse.getId());
@@ -85,8 +86,7 @@ class OcorrenciaServiceIntegrationTest {
 
     @DisplayName("Registra uma ocorrência")
     @Test
-    void registrarOcorrencia() {
-        ocorrenciaRequest.setAlunoId(aluno.getId());
+    void testRegistrarOcorrencia() {
 
         OcorrenciaResponse ocorrenciaSalva = ocorrenciaService.registrarOcorrencia(ocorrenciaRequest);
 
@@ -96,11 +96,21 @@ class OcorrenciaServiceIntegrationTest {
         ocorrenciaRepository.deleteById(ocorrenciaSalva.getId());
     }
 
+    @DisplayName("Altera uma ocorrência no banco")
     @Test
-    void alterarOcorrencia() {
+    void testAlterarOcorrencia() {
+        Assertions.assertNull(ocorrencia.getAluno());
+
+        OcorrenciaResponse ocorrenciaResponse = ocorrenciaService.alterarOcorrencia(ocorrencia.getId(), ocorrenciaRequest);
+
+        Assertions.assertEquals(ocorrenciaRequest.getAlunoId(), ocorrenciaResponse.getAluno().getId());
     }
 
+    @DisplayName("Apaga uma ocorrência no banco")
     @Test
-    void deletarOcorrencia() {
+    void testDeletarOcorrencia() {
+        ocorrenciaService.deletarOcorrencia(ocorrencia.getId());
+
+        Assertions.assertFalse(ocorrenciaRepository.findById(ocorrencia.getId()).isPresent());
     }
 }
