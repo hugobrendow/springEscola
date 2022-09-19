@@ -58,7 +58,6 @@ public class OcorrenciaControllerUnitTest {
         ocorrenciaRequest = new OcorrenciaRequest();
         ocorrenciaRequest.setAlunoId(UUID.fromString("65cb8254-2858-428a-9344-450fe37732d8"));
         ocorrenciaRequest.setDescricao("Teste descricao");
-        ocorrenciaRequest.setDataHora(LocalDateTime.of(2022, 9, 15, 17, 3));
 
         ocorrenciaResponse = new OcorrenciaResponse();
         ocorrenciaResponse.setId(UUID.fromString("65cb8254-2858-428a-9344-450fe37732d8"));

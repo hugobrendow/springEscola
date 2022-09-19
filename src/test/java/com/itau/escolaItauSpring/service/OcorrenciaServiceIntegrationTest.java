@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-class OcorrenciaServiceIntegrationTest {
-
+public class OcorrenciaServiceIntegrationTest {
 
     private final OcorrenciaRepository ocorrenciaRepository;
     private final OcorrenciaService ocorrenciaService;
@@ -43,7 +42,6 @@ class OcorrenciaServiceIntegrationTest {
 
         ocorrenciaRequest = new OcorrenciaRequest();
         ocorrenciaRequest.setDescricao("Teste de requisição");
-        ocorrenciaRequest.setDataHora(LocalDateTime.of(2022, 9, 15, 15, 15, 15));
         ocorrenciaRequest.setAlunoId(null);
 
         aluno = new Aluno();

@@ -3,6 +3,7 @@ package com.itau.escolaItauSpring.service;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
 import com.itau.escolaItauSpring.mapper.OcorrenciaMapper;
+import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.model.Ocorrencia;
 import com.itau.escolaItauSpring.repository.AlunoRepository;
 import com.itau.escolaItauSpring.repository.OcorrenciaRepository;
@@ -73,7 +74,6 @@ public class OcorrenciaServiceUnitTest {
         Assertions.assertEquals(ocorrenciaResponse, ocorrenciaLocalizada);
 
         Mockito.verify(ocorrenciaRepository, Mockito.times(1)).findById(ocorrencia.getId());
-
     }
 
     @DisplayName("Registra uma ocorrência")

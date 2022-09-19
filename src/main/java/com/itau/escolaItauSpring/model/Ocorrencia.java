@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class Ocorrencia {
     private String descricao;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @CreatedDate
     private LocalDateTime dataHora;
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "aluno_id")
