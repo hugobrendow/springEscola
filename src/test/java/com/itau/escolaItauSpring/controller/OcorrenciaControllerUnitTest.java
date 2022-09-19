@@ -36,14 +36,18 @@ import java.util.UUID;
 @WebMvcTest(OcorrenciaController.class)
 public class OcorrenciaControllerUnitTest {
 
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
+
     @Autowired
-    MockMvc mockMvc;
+    public OcorrenciaControllerUnitTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+        this.mockMvc = mockMvc;
+        this.objectMapper = objectMapper;
+    }
 
     @MockBean
     OcorrenciaService ocorrenciaService;
 
-    @Autowired
-    ObjectMapper objectMapper;
 
     private String expectedSingleList;
     private String expected;
@@ -123,8 +127,8 @@ public class OcorrenciaControllerUnitTest {
     @Test
     void testeEditarOcorrencia() throws Exception {
 
-        ResultActions result = this.mockMvc.perform(put("/ocorrencia/{id}", idExistente)
-                .content(jsonBody)
+        ResultActions result = this.mockMvc.perform(patch("/ocorrencia/{id}", idExistente)
+                .content(jsonAlteradoBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
 
