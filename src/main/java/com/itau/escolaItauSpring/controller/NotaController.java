@@ -1,14 +1,9 @@
 package com.itau.escolaItauSpring.controller;
 
 
-import com.itau.escolaItauSpring.dto.exception.CustomException;
 import com.itau.escolaItauSpring.dto.request.NotaRequest;
-import com.itau.escolaItauSpring.dto.response.AlunoResponse;
 import com.itau.escolaItauSpring.dto.response.NotaResponse;
 import com.itau.escolaItauSpring.service.NotaService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/nota")
@@ -25,7 +22,7 @@ public class NotaController {
 
     private final NotaService notaService;
 
-//    @ApiOperation(value = "Cadastrar novo nota")
+    //    @ApiOperation(value = "Cadastrar novo nota")
 //    @ApiResponses(value = {
 //            @ApiResponse(code = 201, message = "Nota cadastrada com sucesso", response = AlunoResponse.class),
 //            @ApiResponse(code = 400, message = "Informações inválidas, verifique e tente novamente", response = CustomException.class),
@@ -39,8 +36,36 @@ public class NotaController {
         URI uri = uriComponentsBuilder.path("/nota/{id}").buildAndExpand(notaResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(notaResponse);
     }
-//    @PostMapping
-//    public String testeNota(){
-//        return "Ta funcionando";
-//    }
+
+    @GetMapping
+    public ResponseEntity<List<NotaResponse>> listar() {
+        return ResponseEntity.ok(notaService.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<NotaResponse> buscarPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(notaService.buscarPorId(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<NotaResponse> atualizar(@PathVariable UUID id,
+              @RequestBody NotaRequest notaRequest) {
+        return ResponseEntity.ok(notaService.atualizar(id, notaRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remover(@PathVariable UUID id) {
+        notaService.remover(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/matricula/{id}")
+    public ResponseEntity<List<NotaResponse>> listarPorMatricula(@PathVariable UUID id) {
+        return ResponseEntity.ok(notaService.listarPorMatricula(id));
+    }
+
+    @GetMapping("/curso-disciplina/{id}")
+    public ResponseEntity<List<NotaResponse>> listarPorCursoDisciplina(@PathVariable UUID id) {
+        return ResponseEntity.ok(notaService.listarPorCursoDisciplina(id));
+    }
 }
