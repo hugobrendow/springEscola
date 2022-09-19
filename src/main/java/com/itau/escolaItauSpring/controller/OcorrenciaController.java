@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Path;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -83,6 +84,11 @@ public class OcorrenciaController {
     public ResponseEntity<Void> deletarOcorrencia(@PathVariable UUID id) {
         ocorrenciaService.deletarOcorrencia(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/aluno/{id}")
+    public ResponseEntity<List<OcorrenciaResponse>> listarOcorrenciasPorAluno(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok(ocorrenciaService.listarOcorrenciasPorAluno(id));
     }
 
 }

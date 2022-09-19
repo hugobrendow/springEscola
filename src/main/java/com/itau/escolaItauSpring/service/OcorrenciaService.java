@@ -49,6 +49,10 @@ public class OcorrenciaService {
         ocorrenciaRepository.deleteById(id);
     }
 
+    public List<OcorrenciaResponse> listarOcorrenciasPorAluno(UUID id) {
+        return ocorrenciaMapper.toResponseList(ocorrenciaRepository.findByAluno_Id(id));
+    }
+
     private Ocorrencia buscarOcorrenciaPorId(UUID id) {
         return ocorrenciaRepository.findById(id).orElseThrow(OcorrenciaNaoEncontradaException::new);
     }
