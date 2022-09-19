@@ -41,12 +41,14 @@ public class TurmaService {
         return buscarPorId(id).getNumeroVagas();
     }
 
-    public boolean validarSeHaVagas(UUID idTurma){
-        return buscarVagasDisponiveis(idTurma) > 0;
+    public boolean verificarSeHaVagas(UUID id){
+        return buscarVagasDisponiveis(id) > 0;
     }
 
-    //inserir lógica para atualizar número de vagas quando uma matrícula é feita
-
-    //inserir lógica para validar se há vaga disponível
+    public void atualizarVagas(UUID id) {
+        Turma turma = buscarModelPorId(id);
+        turma.setNumeroVagas(turma.getNumeroVagas() - 1);
+        turmaRepository.save(turma);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.model;
 
+import com.itau.escolaItauSpring.enums.StatusMatricula;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,8 +28,8 @@ public class Matricula {
     @Generated(GenerationTime.INSERT)
     private Long numero;
 
-    @Column(columnDefinition = "boolean default false")
-    private Boolean status;
+    //@Column(columnDefinition = "StatusMatricula default ATIVADA")
+    private StatusMatricula status = StatusMatricula.ATIVADA;
 
     @CreationTimestamp
     private LocalDate data;

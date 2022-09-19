@@ -37,6 +37,21 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, exceptionDetail,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
+    @ExceptionHandler(value = {AlunoJaMatriculadoException.class})
+    protected ResponseEntity<Object> handleAlunoJaMatriculadoException(AlunoJaMatriculadoException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Aluno já matriculado nesta turma"), HttpStatus.CONFLICT.value());
+        return handleExceptionInternal(ex, exceptionDetail,
+                new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler(value = {NaoHaVagasException.class})
+    protected ResponseEntity<Object> handleNaoHaVagasException(NaoHaVagasException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Não há vagas disponíveis nesta turma"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     /*@Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> detalhes = ex.getBindingResult().getAllErrors().stream()

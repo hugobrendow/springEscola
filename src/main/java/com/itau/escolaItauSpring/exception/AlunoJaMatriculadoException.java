@@ -1,4 +1,4 @@
 package com.itau.escolaItauSpring.exception;
 
-public class AlunoJaMatriculadoException extends Exception {
+public class AlunoJaMatriculadoException extends RuntimeException {
 }

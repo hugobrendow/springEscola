@@ -1,6 +1,7 @@
 package com.itau.escolaItauSpring.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.itau.escolaItauSpring.enums.StatusMatricula;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ public class MatriculaResponse {
 
     private Long numero;
 
-    private Boolean status;
+    private StatusMatricula status;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
 

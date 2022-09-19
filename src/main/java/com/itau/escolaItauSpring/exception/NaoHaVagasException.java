@@ -1,7 +1,7 @@
 package com.itau.escolaItauSpring.exception;
 
-public class NaoHaVagas extends Exception {
-    public NaoHaVagas() {
+public class NaoHaVagasException extends RuntimeException {
+    public NaoHaVagasException() {
         super("Não há vagas disponíveis");
     }
 }
