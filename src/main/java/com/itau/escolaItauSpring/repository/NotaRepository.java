@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface NotaRepository extends JpaRepository<Nota, UUID> {
-    public List<Nota> findByMatriculaId(UUID id);
-    public List<Nota> findByCursoDisciplinaId(UUID id);
-    public Optional<Nota> findByCursoDisciplinaIdAndMatriculaId(UUID cursoDisciplinaId, UUID matriculaId);
+    List<Nota> findByMatriculaId(UUID id);
+    List<Nota> findByCursoDisciplinaId(UUID id);
+    Optional<Nota> findByCursoDisciplinaIdAndMatriculaId(UUID cursoDisciplinaId, UUID matriculaId);
 }
