@@ -1,6 +1,7 @@
 package com.itau.escolaItauSpring.controller;
 
 import com.itau.escolaItauSpring.dto.exception.CustomException;
+import com.itau.escolaItauSpring.dto.request.OcorrenciaAlteracaoRequest;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
 import com.itau.escolaItauSpring.exception.OcorrenciaNaoEncontradaException;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Path;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -70,8 +70,8 @@ public class OcorrenciaController {
             @ApiResponse(code = 401, message = "Usuário não possuí permissão para este método"),
             @ApiResponse(code = 500, message = "Erro interno", response = CustomException.class)
     })
-    @PutMapping("/{id}")
-    public ResponseEntity<OcorrenciaResponse> editarOcorrencia(@PathVariable("id") UUID id, @RequestBody @Valid OcorrenciaRequest request) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<OcorrenciaResponse> editarOcorrencia(@PathVariable("id") UUID id, @RequestBody @Valid OcorrenciaAlteracaoRequest request) {
         return ResponseEntity.ok(ocorrenciaService.alterarOcorrencia(id, request));
     }
 

@@ -1,13 +1,11 @@
 package com.itau.escolaItauSpring.service;
 
+import com.itau.escolaItauSpring.dto.request.OcorrenciaAlteracaoRequest;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
-import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.exception.OcorrenciaNaoEncontradaException;
 import com.itau.escolaItauSpring.mapper.OcorrenciaMapper;
-import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.model.Ocorrencia;
-import com.itau.escolaItauSpring.repository.AlunoRepository;
 import com.itau.escolaItauSpring.repository.OcorrenciaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,9 +36,9 @@ public class OcorrenciaService {
         return ocorrenciaMapper.toResponse(buscarOcorrenciaPorId(ocorrencia.getId()));
     }
 
-    public OcorrenciaResponse alterarOcorrencia(UUID id, OcorrenciaRequest request) {
-        Ocorrencia ocorrencia = ocorrenciaMapper.toModel(request);
-        ocorrencia.setId(id);
+    public OcorrenciaResponse alterarOcorrencia(UUID id, OcorrenciaAlteracaoRequest request) {
+        Ocorrencia ocorrencia = buscarOcorrenciaPorId(id);
+        ocorrencia.setDescricao(request.getDescricao());
         ocorrencia = ocorrenciaRepository.save(ocorrencia);
         return ocorrenciaMapper.toResponse(buscarOcorrenciaPorId(ocorrencia.getId()));
     }

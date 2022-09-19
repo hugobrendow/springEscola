@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.service;
 
+import com.itau.escolaItauSpring.dto.request.OcorrenciaAlteracaoRequest;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
 import com.itau.escolaItauSpring.model.Aluno;
@@ -31,6 +32,7 @@ public class OcorrenciaServiceIntegrationTest {
 
     private static Ocorrencia ocorrencia;
     private static OcorrenciaRequest ocorrenciaRequest;
+    private static OcorrenciaAlteracaoRequest ocorrenciaAlteracaoRequest;
     private static Aluno aluno;
 
     @BeforeAll
@@ -43,6 +45,9 @@ public class OcorrenciaServiceIntegrationTest {
         ocorrenciaRequest = new OcorrenciaRequest();
         ocorrenciaRequest.setDescricao("Teste de requisição");
         ocorrenciaRequest.setAlunoId(null);
+
+        ocorrenciaAlteracaoRequest = new OcorrenciaAlteracaoRequest();
+        ocorrenciaAlteracaoRequest.setDescricao("Teste de alteração");
 
         aluno = new Aluno();
         aluno.setNome("José");
@@ -97,11 +102,9 @@ public class OcorrenciaServiceIntegrationTest {
     @DisplayName("Altera uma ocorrência no banco")
     @Test
     void testAlterarOcorrencia() {
-        Assertions.assertNull(ocorrencia.getAluno());
+        OcorrenciaResponse ocorrenciaResponse = ocorrenciaService.alterarOcorrencia(ocorrencia.getId(),ocorrenciaAlteracaoRequest);
 
-        OcorrenciaResponse ocorrenciaResponse = ocorrenciaService.alterarOcorrencia(ocorrencia.getId(), ocorrenciaRequest);
-
-        Assertions.assertEquals(ocorrenciaRequest.getAlunoId(), ocorrenciaResponse.getAluno().getId());
+        Assertions.assertEquals(ocorrenciaAlteracaoRequest.getDescricao(), ocorrenciaResponse.getDescricao());
     }
 
     @DisplayName("Apaga uma ocorrência no banco")

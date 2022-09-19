@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.service;
 
+import com.itau.escolaItauSpring.dto.request.OcorrenciaAlteracaoRequest;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
 import com.itau.escolaItauSpring.mapper.OcorrenciaMapper;
@@ -32,11 +33,13 @@ public class OcorrenciaServiceUnitTest {
     private static Ocorrencia ocorrencia;
     private static OcorrenciaResponse ocorrenciaResponse;
     private static OcorrenciaRequest ocorrenciaRequest;
+    private static OcorrenciaAlteracaoRequest ocorrenciaAlteracaoRequest;
 
     @BeforeEach
     void setUp() {
         ocorrencia = new Ocorrencia();
         ocorrenciaRequest = new OcorrenciaRequest();
+        ocorrenciaAlteracaoRequest = new OcorrenciaAlteracaoRequest();
         ocorrenciaResponse = new OcorrenciaResponse();
         ocorrencia.setId(UUID.randomUUID());
         ocorrencia.setAluno(null);
@@ -91,10 +94,10 @@ public class OcorrenciaServiceUnitTest {
     void testAlterarOcorrencia() {
         Mockito.when(ocorrenciaRepository.save(ocorrencia)).thenReturn(ocorrencia);
         Mockito.when(ocorrenciaMapper.toResponse(ocorrencia)).thenReturn(ocorrenciaResponse);
-        Mockito.when(ocorrenciaMapper.toModel(ocorrenciaRequest)).thenReturn(ocorrencia);
+        Mockito.when(ocorrenciaRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.of(ocorrencia));
         Mockito.when(ocorrenciaRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.of(ocorrencia));
 
-        OcorrenciaResponse ocorrenciaAlterada = ocorrenciaService.alterarOcorrencia(UUID.randomUUID(), ocorrenciaRequest);
+        OcorrenciaResponse ocorrenciaAlterada = ocorrenciaService.alterarOcorrencia(UUID.randomUUID(), ocorrenciaAlteracaoRequest);
 
         Assertions.assertEquals(ocorrenciaResponse, ocorrenciaAlterada);
 

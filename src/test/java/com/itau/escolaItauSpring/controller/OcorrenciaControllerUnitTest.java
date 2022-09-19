@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itau.escolaItauSpring.dto.request.OcorrenciaAlteracaoRequest;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.AlunoResponse;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
@@ -47,10 +48,12 @@ public class OcorrenciaControllerUnitTest {
     private String expectedSingleList;
     private String expected;
     private OcorrenciaRequest ocorrenciaRequest;
+    private OcorrenciaAlteracaoRequest ocorrenciaAlteracaoRequest;
     private OcorrenciaResponse ocorrenciaResponse;
     private String idExistente;
     private String idInexistente;
     private String jsonBody;
+    private String jsonAlteradoBody;
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
@@ -62,6 +65,9 @@ public class OcorrenciaControllerUnitTest {
         ocorrenciaRequest.setAlunoId(UUID.fromString(idExistente));
         ocorrenciaRequest.setDescricao("Teste descricao");
 
+        ocorrenciaAlteracaoRequest = new OcorrenciaAlteracaoRequest();
+        ocorrenciaRequest.setDescricao("Teste alterar descricao");
+
         ocorrenciaResponse = new OcorrenciaResponse();
         ocorrenciaResponse.setId(UUID.fromString(idExistente));
         ocorrenciaResponse.setDescricao("Teste descricao");
@@ -71,11 +77,13 @@ public class OcorrenciaControllerUnitTest {
         expectedSingleList = objectMapper.writeValueAsString(List.of(ocorrenciaResponse));
         expected = objectMapper.writeValueAsString(ocorrenciaResponse);
         jsonBody = objectMapper.writeValueAsString(ocorrenciaRequest);
+        jsonAlteradoBody = objectMapper.writeValueAsString(ocorrenciaAlteracaoRequest);
 
         when(ocorrenciaService.registrarOcorrencia(any(OcorrenciaRequest.class))).thenReturn(ocorrenciaResponse);
         when(ocorrenciaService.buscarOcorrencias()).thenReturn(Collections.singletonList(ocorrenciaResponse));
         when(ocorrenciaService.buscarOcorrencia(UUID.fromString(idExistente))).thenReturn(ocorrenciaResponse);
         when(ocorrenciaService.buscarOcorrencia(UUID.fromString(idInexistente))).thenThrow(OcorrenciaNaoEncontradaException.class);
+        when(ocorrenciaService.alterarOcorrencia(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn(ocorrenciaResponse);
     }
 
     @DisplayName(value = "Listar todas as ocorrências")
