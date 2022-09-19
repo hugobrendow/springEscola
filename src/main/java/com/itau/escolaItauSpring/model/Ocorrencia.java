@@ -1,14 +1,12 @@
 package com.itau.escolaItauSpring.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +27,8 @@ public class Ocorrencia {
     //    @CreatedDate
     @CreationTimestamp
     private LocalDateTime dataHora;
+    @UpdateTimestamp
+    private LocalDateTime dataHoraAlteracao;
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "aluno_id")
     private Aluno aluno;
