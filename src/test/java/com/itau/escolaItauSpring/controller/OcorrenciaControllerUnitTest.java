@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.AlunoResponse;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @WebMvcTest(OcorrenciaController.class)
@@ -40,7 +42,7 @@ public class OcorrenciaControllerUnitTest {
     OcorrenciaService ocorrenciaService;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     private String expectedSingleList;
     private String expected;
@@ -48,25 +50,27 @@ public class OcorrenciaControllerUnitTest {
     private OcorrenciaResponse ocorrenciaResponse;
     private String idExistente;
     private String idInexistente;
+    private String jsonBody;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws JsonProcessingException {
 
-        expectedSingleList ="[{\"id\":\"65cb8254-2858-428a-9344-450fe37732d8\",\"descricao\":\"Teste descricao\",\"dataHora\":\"15-09-2022 17:03:00\",\"aluno\":{\"id\":null,\"nome\":null,\"dataNascimento\":null,\"telefone\":null,\"email\":null}}]";
-        expected = "{\"id\":\"65cb8254-2858-428a-9344-450fe37732d8\",\"descricao\":\"Teste descricao\",\"dataHora\":\"15-09-2022 17:03:00\",\"aluno\":{\"id\":null,\"nome\":null,\"dataNascimento\":null,\"telefone\":null,\"email\":null}}";
+        idExistente = "65cb8254-2858-428a-9344-450fe37732d8";
+        idInexistente = "00000000-0000-0000-0000-000000000000";
 
         ocorrenciaRequest = new OcorrenciaRequest();
-        ocorrenciaRequest.setAlunoId(UUID.fromString("65cb8254-2858-428a-9344-450fe37732d8"));
+        ocorrenciaRequest.setAlunoId(UUID.fromString(idExistente));
         ocorrenciaRequest.setDescricao("Teste descricao");
 
         ocorrenciaResponse = new OcorrenciaResponse();
-        ocorrenciaResponse.setId(UUID.fromString("65cb8254-2858-428a-9344-450fe37732d8"));
+        ocorrenciaResponse.setId(UUID.fromString(idExistente));
         ocorrenciaResponse.setDescricao("Teste descricao");
         ocorrenciaResponse.setDataHora(LocalDateTime.of(2022, 9, 15, 17, 3));
         ocorrenciaResponse.setAluno(new AlunoResponse());
 
-        idExistente = "65cb8254-2858-428a-9344-450fe37732d8";
-        idInexistente = "00000000-0000-0000-0000-000000000000";
+        expectedSingleList = objectMapper.writeValueAsString(List.of(ocorrenciaResponse));
+        expected = objectMapper.writeValueAsString(ocorrenciaResponse);
+        jsonBody = objectMapper.writeValueAsString(ocorrenciaRequest);
 
         when(ocorrenciaService.registrarOcorrencia(any(OcorrenciaRequest.class))).thenReturn(ocorrenciaResponse);
         when(ocorrenciaService.buscarOcorrencias()).thenReturn(Collections.singletonList(ocorrenciaResponse));
@@ -88,7 +92,7 @@ public class OcorrenciaControllerUnitTest {
     @DisplayName(value = "Buscar ocorrência por ID")
     @Test
     void testeBuscarOcorrencia() throws Exception {
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/ocorrencia/{id}", "65cb8254-2858-428a-9344-450fe37732d8").contentType(MediaType.APPLICATION_JSON));
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/ocorrencia/{id}", idExistente).contentType(MediaType.APPLICATION_JSON));
         result.andExpect(status().isOk());
         Assertions.assertEquals(expected, result.andReturn().getResponse().getContentAsString());
     }
@@ -96,7 +100,6 @@ public class OcorrenciaControllerUnitTest {
     @DisplayName(value = "Cadastrar nova ocorrencia")
     @Test
     void testeRegistrarOcorrencia() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(ocorrenciaRequest);
 
         ResultActions result = this.mockMvc.perform(post("/ocorrencia")
                 .content(jsonBody)
@@ -111,7 +114,6 @@ public class OcorrenciaControllerUnitTest {
     @DisplayName(value = "Editar ocorrencia")
     @Test
     void testeEditarOcorrencia() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(ocorrenciaRequest);
 
         ResultActions result = this.mockMvc.perform(put("/ocorrencia/{id}", idExistente)
                 .content(jsonBody)
@@ -129,6 +131,7 @@ public class OcorrenciaControllerUnitTest {
         MvcResult result = this.mockMvc.perform(delete("/ocorrencia/{id}", UUID.fromString(idExistente)))
                 .andExpect(status().isNoContent())
                 .andReturn();
+
         verify(ocorrenciaService, times(1)).deletarOcorrencia(UUID.fromString(idExistente));
     }
 
