@@ -1,8 +1,6 @@
 package com.itau.escolaItauSpring.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -25,4 +23,13 @@ public class Nota {
     @ManyToOne
     private CursoDisciplina cursoDisciplina;
 
+    public Nota() {}
+    public Nota(Double nota, Matricula matricula, CursoDisciplina cursoDisciplina) {
+        this.nota = nota;
+        this.matricula = matricula;
+        this.cursoDisciplina = cursoDisciplina;
+    }
 }
+
+
+
