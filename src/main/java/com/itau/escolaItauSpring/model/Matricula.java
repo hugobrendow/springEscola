@@ -28,7 +28,7 @@ public class Matricula {
     @Generated(GenerationTime.INSERT)
     private Long numero;
 
-    //@Column(columnDefinition = "StatusMatricula default ATIVADA")
+    @Enumerated(EnumType.STRING)
     private StatusMatricula status = StatusMatricula.ATIVADA;
 
     @CreationTimestamp
