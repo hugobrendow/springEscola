@@ -7,4 +7,5 @@ INSERT INTO Curso VALUES(random_uuid(), 'Java JSP 2', 'JSP basico 2');
 INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 1', 'Spring Boot basico 1');
 INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 2', 'Spring Boot basico 2');
 INSERT INTO Curso VALUES(random_uuid(), 'SQL 1', 'SQL Básico 1');
-INSERT INTO Curso VALUES(random_uuid(), 'COBOL 1', 'COBOL Básico 1');
+INSERT INTO Curso VALUES('d014f344-382f-11ed-a261-0242ac120002', 'COBOL 1', 'COBOL Básico 1');
+INSERT INTO Turma VALUES(random_uuid(), 'CCXP001', current_date(), current_date(), 10, 'MANHA', 'd014f344-382f-11ed-a261-0242ac120002');

@@ -37,6 +37,14 @@ public class TurmaService {
                 .orElseThrow(ItemNaoExistenteException::new);
     }
 
+    public int buscarVagasDisponiveis(UUID id){
+        return buscarPorId(id).getNumeroVagas();
+    }
+
+    public boolean validarSeHaVagas(UUID idTurma){
+        return buscarVagasDisponiveis(idTurma) > 0;
+    }
+
     //inserir lógica para atualizar número de vagas quando uma matrícula é feita
 
     //inserir lógica para validar se há vaga disponível

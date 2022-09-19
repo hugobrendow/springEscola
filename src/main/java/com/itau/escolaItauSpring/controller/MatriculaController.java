@@ -11,6 +11,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/matricula")
@@ -26,5 +28,11 @@ public class MatriculaController {
         MatriculaResponse matriculaResponse = matriculaService.matricular(matriculaRequest);
         URI uri = uriComponentsBuilder.path("/Matricula/{id}").buildAndExpand(matriculaResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(matriculaResponse);
+    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/turma/{idTurma}")
+    public ResponseEntity<List<MatriculaResponse>> listarPorTurma(@PathVariable UUID idTurma) {
+        List<MatriculaResponse> matriculaResponse = matriculaService.listarPorTurma(idTurma);
+        return ResponseEntity.ok(matriculaResponse);
     }
 }

@@ -21,5 +21,6 @@ public interface MatriculaMapper {
     @Mapping(source = "matricula.aluno.id", target = "idAluno")
     @Mapping(source = "matricula.turma.id", target = "idTurma")
     MatriculaResponse toResponse(Matricula matricula);
+    List<MatriculaResponse> toResponseList(List<Matricula> matriculas);
 
 }

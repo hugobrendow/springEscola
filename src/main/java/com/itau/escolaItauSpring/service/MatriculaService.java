@@ -11,6 +11,7 @@ import com.itau.escolaItauSpring.repository.MatriculaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,15 +23,17 @@ public class MatriculaService {
     private final TurmaService turmaService;
     private final MatriculaMapper mapper;
 
-    public MatriculaResponse matricular(MatriculaRequest request){
+    public MatriculaResponse matricular(MatriculaRequest request) {
         Aluno aluno = alunoService.buscarModelPorId(request.getIdAluno());
         Turma turma = turmaService.buscarModelPorId(request.getIdTurma());
 
-        //verificar se há vaga disponível
+        if (turmaService.validarSeHaVagas(turma.getId())) {
 
-        Matricula matricula = new Matricula(aluno, turma);
-        Matricula matriculaSalva = repository.save(matricula);
-        return mapper.toResponse(matriculaSalva);
+            Matricula matricula = new Matricula(aluno, turma);
+            Matricula matriculaSalva = repository.save(matricula);
+            return mapper.toResponse(matriculaSalva);
+        }
+        throw new RuntimeException();
     }
 
     public Matricula buscarModelPorId(UUID id){
@@ -40,5 +43,10 @@ public class MatriculaService {
 
     public MatriculaResponse buscarPorId(UUID id){
         return mapper.toResponse(buscarModelPorId(id));
+    }
+
+    public List<MatriculaResponse> listarPorTurma(UUID idTurma){
+        List<Matricula> matriculas = repository.findAllByTurmaId(idTurma);
+        return mapper.toResponseList(matriculas);
     }
 }
