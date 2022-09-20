@@ -70,7 +70,7 @@ public class OcorrenciaControllerUnitTest {
         ocorrenciaRequest.setDescricao("Teste descricao");
 
         ocorrenciaAlteracaoRequest = new OcorrenciaAlteracaoRequest();
-        ocorrenciaRequest.setDescricao("Teste alterar descricao");
+        ocorrenciaAlteracaoRequest.setDescricao("Teste alterar descricao");
 
         ocorrenciaResponse = new OcorrenciaResponse();
         ocorrenciaResponse.setId(UUID.fromString(idExistente));
