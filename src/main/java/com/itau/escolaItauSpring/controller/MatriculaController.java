@@ -52,7 +52,7 @@ public class MatriculaController {
         return ResponseEntity.ok(matriculaResponse);
     }
 
-    @ApiOperation(value = "Buscar Matriculas paginadas")
+    @ApiOperation(value = "Buscar Matrículas paginadas")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Matrículas encontradas!",
                     response = MatriculaResponse.class,
@@ -64,7 +64,7 @@ public class MatriculaController {
         return ResponseEntity.ok(matriculas);
     }
 
-    @ApiOperation(value = "Buscar Matriculas por Turma")
+    @ApiOperation(value = "Buscar Matrículas por Turma")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Matrículas encontradas!",
                     response = MatriculaResponse.class,
@@ -78,7 +78,7 @@ public class MatriculaController {
         return ResponseEntity.ok(matriculaResponse);
     }
 
-    @ApiOperation(value = "Buscar Matriculas por Aluno")
+    @ApiOperation(value = "Buscar Matrículas por Aluno")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Matrículas encontradas!",
                     response = MatriculaResponse.class,
@@ -92,7 +92,7 @@ public class MatriculaController {
         return ResponseEntity.ok(matriculaResponse);
     }
 
-    @ApiOperation(value = "Trancar Matricula")
+    @ApiOperation(value = "Trancar Matrícula")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Matrícula trancada!", response = MatriculaResponse.class),
             @ApiResponse(code = 404, message = "Matrícula não existente!"),
@@ -104,7 +104,7 @@ public class MatriculaController {
         return ResponseEntity.ok(matriculaResponse);
     }
 
-    @ApiOperation(value = "Ativar Matricula")
+    @ApiOperation(value = "Ativar Matrícula")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Matrícula ativada!", response = MatriculaResponse.class),
             @ApiResponse(code = 404, message = "Matrícula não existente!"),
