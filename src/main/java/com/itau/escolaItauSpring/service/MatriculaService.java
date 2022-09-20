@@ -2,13 +2,14 @@ package com.itau.escolaItauSpring.service;
 
 import com.itau.escolaItauSpring.dto.request.MatriculaRequest;
 import com.itau.escolaItauSpring.dto.response.MatriculaResponse;
+import com.itau.escolaItauSpring.enums.StatusMatricula;
 import com.itau.escolaItauSpring.exception.AlunoJaMatriculadoException;
 import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.exception.NaoHaVagasException;
 import com.itau.escolaItauSpring.mapper.MatriculaMapper;
 import com.itau.escolaItauSpring.model.Aluno;
-import com.itau.escolaItauSpring.model.Turma;
 import com.itau.escolaItauSpring.model.Matricula;
+import com.itau.escolaItauSpring.model.Turma;
 import com.itau.escolaItauSpring.repository.MatriculaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,7 @@ public class MatriculaService {
         validarMatriculaJaExistente(aluno.getId(), idTurma);
         validarSeHaVagas(idTurma);
 
-        Matricula matricula = new Matricula(aluno, turma);
-        Matricula matriculaSalva = repository.save(matricula);
+        Matricula matriculaSalva = repository.save(new Matricula(aluno, turma));
 
         turmaService.atualizarVagas(idTurma);
 
@@ -43,32 +43,49 @@ public class MatriculaService {
     }
 
     private void validarSeHaVagas(UUID idTurma) {
-        if (!turmaService.verificarSeHaVagas(idTurma)) {
+        if (!turmaService.verificarSeHaVagas(idTurma))
             throw new NaoHaVagasException();
-        }
     }
 
     private void validarMatriculaJaExistente(UUID idAluno, UUID idTurma) {
         if (repository.findByAlunoIdAndTurmaId(idAluno, idTurma).isPresent())
             throw new AlunoJaMatriculadoException();
     }
-    
-    public Matricula buscarModelPorId(UUID id){
+
+    public Matricula buscarModelPorId(UUID id) {
         return repository.findById(id)
                 .orElseThrow(ItemNaoExistenteException::new);
     }
 
-    public MatriculaResponse buscarPorId(UUID id){
+    public MatriculaResponse buscarPorId(UUID id) {
         return mapper.toResponse(buscarModelPorId(id));
     }
 
-    public List<MatriculaResponse> listarPorTurma(UUID idTurma){
+    public List<MatriculaResponse> listarPorTurma(UUID idTurma) {
         List<Matricula> matriculas = repository.findAllByTurmaId(idTurma);
         return mapper.toResponseList(matriculas);
     }
 
-    public List<MatriculaResponse> listarPorAluno(UUID idAluno){
+    public List<MatriculaResponse> listarPorAluno(UUID idAluno) {
         List<Matricula> matriculas = repository.findAllByAlunoId(idAluno);
         return mapper.toResponseList(matriculas);
+    }
+
+    public MatriculaResponse trancarMatricula(UUID id) {
+        return mapper.toResponse(alterarStatus(id, StatusMatricula.TRANCADA));
+    }
+
+    public MatriculaResponse ativarMatricula(UUID id) {
+        return mapper.toResponse(alterarStatus(id, StatusMatricula.ATIVADA));
+    }
+
+    public MatriculaResponse cancelarMatricula(UUID id) {
+        return mapper.toResponse(alterarStatus(id, StatusMatricula.CANCELADA));
+    }
+
+    private Matricula alterarStatus(UUID id, StatusMatricula status) {
+        Matricula matricula = buscarModelPorId(id);
+        matricula.setStatus(status);
+        return repository.save(matricula);
     }
 }

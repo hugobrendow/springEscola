@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class CepRestTemplateService {
     private final RestTemplate restTemplate;
-    private final static String URL = "http://viacep.com.br/ws/";
+    private static final String URL = "http://viacep.com.br/ws/";
 
     public CepRestTemplateService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
