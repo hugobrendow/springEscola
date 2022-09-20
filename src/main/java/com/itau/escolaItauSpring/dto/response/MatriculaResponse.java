@@ -15,6 +15,7 @@ public class MatriculaResponse {
     private Long numero;
 
     private StatusMatricula status;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
 

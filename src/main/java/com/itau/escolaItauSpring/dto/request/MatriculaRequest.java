@@ -8,10 +8,10 @@ import java.util.UUID;
 @Data
 public class MatriculaRequest {
 
-    @NotNull
+    @NotNull(message = "É necessário ter um aluno para a realização da matrícula")
     private UUID idAluno;
 
-    @NotNull
+    @NotNull(message = "É necessário ter uma turma para a realização da matrícula")
     private UUID idTurma;
 
 }
