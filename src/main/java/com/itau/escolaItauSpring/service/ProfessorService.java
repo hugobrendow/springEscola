@@ -27,7 +27,7 @@ public class ProfessorService {
     }
 
     public List<ProfessorResponse> listar(Pageable pageable) {
-        Page<Professor> professores= repository.findAll(pageable);
+        Page<Professor> professores = repository.findAll(pageable);
         return mapper.toResponseList(professores.getContent());
     }
 
