@@ -24,4 +24,5 @@ public class ProfessorCursoDisciplinaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(vinculaCursoResponse);
     }
 
+
 }
