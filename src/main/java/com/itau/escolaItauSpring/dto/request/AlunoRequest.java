@@ -7,16 +7,17 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 public class AlunoRequest {
     @NotNull(message = "O nome não pode ser vazio")
-    @Min(value = 3, message = "O nome deve ter no mínimo 3 caracteres")
+    @Size(min = 3, message = "O nome deve ter no mínimo 3 caracteres")
     private String nome;
+
     @JsonFormat(pattern="dd-MM-yyyy")
     @NotNull(message = "A data de nascimento não pode ser nula")
     private LocalDate dataNascimento;
