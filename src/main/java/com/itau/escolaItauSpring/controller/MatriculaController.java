@@ -28,6 +28,7 @@ public class MatriculaController {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Matrícula efetuada com sucesso!", response = MatriculaResponse.class),
             @ApiResponse(code = 400, message = "Não há mais vagas disponíveis nesta turma!"),
+            @ApiResponse(code = 409, message = "Aluno já matriculado nesta turma!")
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -101,7 +102,7 @@ public class MatriculaController {
         return ResponseEntity.ok(matriculaResponse);
     }
 
-    @ApiOperation(value = "Buscar Matricula")
+    @ApiOperation(value = "Cancelar Matrícula")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Matrícula cancelada!", response = MatriculaResponse.class),
             @ApiResponse(code = 404, message = "Matrícula não existente!"),

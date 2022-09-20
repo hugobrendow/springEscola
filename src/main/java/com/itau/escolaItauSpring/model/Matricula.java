@@ -5,18 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
+//@Audited
 public class Matricula {
 
     @Id
@@ -24,11 +26,10 @@ public class Matricula {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
-    @Column(columnDefinition="serial")
-    @Generated(GenerationTime.INSERT)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numero;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated (EnumType.STRING)
     private StatusMatricula status = StatusMatricula.ATIVADA;
 
     @CreationTimestamp
