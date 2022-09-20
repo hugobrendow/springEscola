@@ -1,4 +1,4 @@
-INSERT INTO Curso VALUES(random_uuid(), 'Java 1', 'Java basico 1');
+INSERT INTO Curso VALUES('4d933b83-b79a-492e-93ba-ef1b22eeb6f6', 'Java 1', 'Java basico 1');
 INSERT INTO Curso VALUES(random_uuid(), 'Java 2', 'Java basico 2');
 INSERT INTO Curso VALUES(random_uuid(), 'PHP 1', 'PHP basico 1');
 INSERT INTO Curso VALUES(random_uuid(), 'PHP 2', 'PHP basico 2');
@@ -16,8 +16,10 @@ insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SE
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_COORDENADOR');
 
-INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'POO 1', 20);
-INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'POO 2', 20);
+
+
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES('0a063e4e-f200-46ee-8cef-d91b624595eb', 'POO 1', 20);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES('f995f890-c412-4159-bd7c-5bb8c1995d2a', 'POO 2', 20);
 INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 1', 30);
 INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 2', 40);
 INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 3', 60);
