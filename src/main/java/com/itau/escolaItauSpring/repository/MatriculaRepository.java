@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface MatriculaRepository extends JpaRepository<Matricula, UUID> {
     List<Matricula> findAllByTurmaId(UUID idTurma);
-
+    List<Matricula> findAllByAlunoId(UUID idAluno);
     Optional<Matricula> findByAlunoIdAndTurmaId(UUID idAluno, UUID idTurma);
 }

@@ -66,4 +66,9 @@ public class MatriculaService {
         List<Matricula> matriculas = repository.findAllByTurmaId(idTurma);
         return mapper.toResponseList(matriculas);
     }
+
+    public List<MatriculaResponse> listarPorAluno(UUID idAluno){
+        List<Matricula> matriculas = repository.findAllByAlunoId(idAluno);
+        return mapper.toResponseList(matriculas);
+    }
 }

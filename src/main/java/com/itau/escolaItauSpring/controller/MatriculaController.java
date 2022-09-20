@@ -1,8 +1,6 @@
 package com.itau.escolaItauSpring.controller;
 
-import com.itau.escolaItauSpring.dto.exception.CustomException;
 import com.itau.escolaItauSpring.dto.request.MatriculaRequest;
-import com.itau.escolaItauSpring.dto.response.AlunoResponse;
 import com.itau.escolaItauSpring.dto.response.MatriculaResponse;
 import com.itau.escolaItauSpring.service.MatriculaService;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +21,7 @@ import java.util.UUID;
 @RequestMapping("/matricula")
 @RequiredArgsConstructor
 public class MatriculaController {
-    
+
     private final MatriculaService matriculaService;
 
     @ApiOperation(value = "Matricular aluno")
@@ -33,15 +31,23 @@ public class MatriculaController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<MatriculaResponse> cadastrar(@Valid @RequestBody MatriculaRequest matriculaRequest, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<MatriculaResponse> matricular(@Valid @RequestBody MatriculaRequest matriculaRequest, UriComponentsBuilder uriComponentsBuilder) {
         MatriculaResponse matriculaResponse = matriculaService.matricular(matriculaRequest);
         URI uri = uriComponentsBuilder.path("/Matricula/{id}").buildAndExpand(matriculaResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(matriculaResponse);
     }
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/turma/{idTurma}")
     public ResponseEntity<List<MatriculaResponse>> listarPorTurma(@PathVariable UUID idTurma) {
         List<MatriculaResponse> matriculaResponse = matriculaService.listarPorTurma(idTurma);
+        return ResponseEntity.ok(matriculaResponse);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/aluno/{idAluno}")
+    public ResponseEntity<List<MatriculaResponse>> listarPorAluno(@PathVariable UUID idAluno) {
+        List<MatriculaResponse> matriculaResponse = matriculaService.listarPorAluno(idAluno);
         return ResponseEntity.ok(matriculaResponse);
     }
 }

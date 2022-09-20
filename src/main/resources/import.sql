@@ -8,5 +8,7 @@ INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 1', 'Spring Boot basico 1')
 INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 2', 'Spring Boot basico 2');
 INSERT INTO Curso VALUES(random_uuid(), 'SQL 1', 'SQL Básico 1');
 INSERT INTO Curso VALUES('d014f344-382f-11ed-a261-0242ac120002', 'COBOL 1', 'COBOL Básico 1');
-INSERT INTO Turma VALUES(random_uuid(), 'CCXP001', current_date(), current_date(), 10, 'MANHA', 'd014f344-382f-11ed-a261-0242ac120002');
-INSERT INTO Turma VALUES(random_uuid(), 'CCXP002', current_date(), current_date(), 0, 'NOITE', 'd014f344-382f-11ed-a261-0242ac120002');
+INSERT INTO Turma VALUES('d014f344-382f-11ed-a261-0242ac120003','CCXP001',current_date(),current_date(),10,'MANHA','d014f344-382f-11ed-a261-0242ac120002');
+INSERT INTO Turma VALUES('d014f344-382f-11ed-a261-0242ac120004','CCXP002',current_date(),current_date(),1,'NOITE','d014f344-382f-11ed-a261-0242ac120002');
+INSERT INTO Endereco VALUES('d014f344-382f-11ed-a261-0242ac120005','05856330','São Paulo','','SP','Rua Joaquim Pedroza',512);
+INSERT INTO Aluno VALUES('d014f344-382f-11ed-a261-0242ac120006','00000000111',current_date(),'rodrigo@gmail.com','Rodrigo','11987654321','d014f344-382f-11ed-a261-0242ac120005');
