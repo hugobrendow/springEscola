@@ -4,6 +4,7 @@ import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.model.CursoDisciplina;
 import com.itau.escolaItauSpring.repository.CursoDisciplinaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
