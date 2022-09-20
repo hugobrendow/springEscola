@@ -3,6 +3,7 @@ package com.itau.escolaItauSpring.controller;
 import com.itau.escolaItauSpring.dto.response.CepResponse;
 import com.itau.escolaItauSpring.service.CepFeignClient;
 import com.itau.escolaItauSpring.service.CepRestTemplateService;
+import com.itau.escolaItauSpring.service.CepWebClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class CepController {
 
     private final CepRestTemplateService cepRestTemplateService;
+    private final CepWebClientService cepWebClientService;
     private final CepFeignClient cepFeignClient;
 
     @GetMapping("/{cep}")
     public ResponseEntity<CepResponse> listar(@PathVariable("cep") String cep) {
         CepResponse cepResponse = cepRestTemplateService.getCep(cep);
+        return ResponseEntity.ok(cepResponse);
+    }
+
+    @GetMapping("/{cep}/web-client")
+    public ResponseEntity<CepResponse> listarWebClient(@PathVariable("cep") String cep) {
+        CepResponse cepResponse = cepWebClientService.getCep(cep);
         return ResponseEntity.ok(cepResponse);
     }
 
