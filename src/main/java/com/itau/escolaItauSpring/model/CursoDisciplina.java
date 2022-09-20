@@ -1,8 +1,6 @@
 package com.itau.escolaItauSpring.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -11,7 +9,9 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class CursoDisciplina {
     @Id
     @GeneratedValue
