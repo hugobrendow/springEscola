@@ -12,6 +12,9 @@ import com.itau.escolaItauSpring.model.Matricula;
 import com.itau.escolaItauSpring.model.Turma;
 import com.itau.escolaItauSpring.repository.MatriculaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,6 +67,12 @@ public class MatriculaService {
     public List<MatriculaResponse> listarPorTurma(UUID idTurma) {
         List<Matricula> matriculas = repository.findAllByTurmaId(idTurma);
         return mapper.toResponseList(matriculas);
+    }
+
+    public Page<MatriculaResponse> listaPaginada(Pageable pageable){
+        Page<Matricula> matriculas = repository.findAll(pageable);
+        List<MatriculaResponse> matriculasPageable = mapper.toResponseList(matriculas.getContent());
+        return new PageImpl<>(matriculasPageable, pageable, matriculas.getSize());
     }
 
     public List<MatriculaResponse> listarPorAluno(UUID idAluno) {

@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +50,18 @@ public class MatriculaController {
     public ResponseEntity<MatriculaResponse> buscarMatricula(@PathVariable UUID id) {
         MatriculaResponse matriculaResponse = matriculaService.buscarPorId(id);
         return ResponseEntity.ok(matriculaResponse);
+    }
+
+    @ApiOperation(value = "Buscar Matriculas paginadas")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Matrículas encontradas!",
+                    response = MatriculaResponse.class,
+                    responseContainer = "List"),
+    })
+    @GetMapping
+    public ResponseEntity<Page<MatriculaResponse>> listarPaginado(Pageable pageable) {
+        Page<MatriculaResponse> matriculas = matriculaService.listaPaginada(pageable);
+        return ResponseEntity.ok(matriculas);
     }
 
     @ApiOperation(value = "Buscar Matriculas por Turma")
