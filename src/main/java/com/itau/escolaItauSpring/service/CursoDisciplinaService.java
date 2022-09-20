@@ -12,7 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CursoDisciplinaService implements ICursoDisciplinaService {
 
-    private CursoDisciplinaRepository repository;
+    private final CursoDisciplinaRepository repository;
 
     @Override
     public CursoDisciplina buscarPorId(UUID id) {
