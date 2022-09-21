@@ -55,8 +55,11 @@ public class ProfessorService {
     }
 
     public List<ProfessorResponse> filtro(String nome, String cpf, NivelProfessorEnum nivel, Pageable pageable) {
-        Page<Professor> professoresPage = repository.findProfessorByParam(nome, cpf, nivel, pageable);
+        Page<Professor> professoresPage = repository.findProfessorByNomeContainingIgnoreCaseOrCpfContainingOrNivel(nome, cpf, nivel, pageable);
         return mapper.toResponseList(professoresPage.getContent());
     }
-    
+    public void limparBanco() {
+        repository.deleteAll();
+    }
+
 }

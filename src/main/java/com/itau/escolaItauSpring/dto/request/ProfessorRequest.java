@@ -3,8 +3,7 @@ package com.itau.escolaItauSpring.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itau.escolaItauSpring.config.Telefone;
 import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
@@ -15,6 +14,9 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProfessorRequest {
     @NotBlank
     @Min(value = 3, message = "o nome deve ter no mínimo 3 caracteres")

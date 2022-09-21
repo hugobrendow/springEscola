@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.service;
 
+import com.itau.escolaItauSpring.dto.request.EnderecoRequest;
 import com.itau.escolaItauSpring.dto.request.ProfessorRequest;
 import com.itau.escolaItauSpring.dto.response.ProfessorResponse;
 import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -40,7 +42,7 @@ public class ProfessorServiceUnitTest {
         Mockito.when(professorMapper.toResponse(ArgumentMatchers.any(Professor.class))).thenReturn(new ProfessorResponse());
         Mockito.when(professorRepository.save(ArgumentMatchers.any(Professor.class))).thenReturn(professor);
 
-        professorService.adicionar(new ProfessorRequest());
+        professorService.adicionar(buildProfessorRequest());
 
         Mockito.verify(professorRepository, Mockito.times(1)).save(Mockito.any());
         Mockito.verify(professorMapper, Mockito.times(1)).toResponse(Mockito.any());
@@ -71,7 +73,7 @@ public class ProfessorServiceUnitTest {
     public void atualizarTest() throws ItemNaoExistenteException {
         Professor professor = new Professor();
         Professor professorPosToModel = new Professor();
-        ProfessorRequest professorRequest = new ProfessorRequest();
+        ProfessorRequest professorRequest = buildProfessorRequest();
         ProfessorResponse professorPosToResponse = new ProfessorResponse();
         UUID id = UUID.randomUUID();
         professorPosToResponse.setId(id);
@@ -121,7 +123,7 @@ public class ProfessorServiceUnitTest {
         Mockito.when(professorMapper.toResponseList(any(List.class))).thenReturn(professorResponseList);
 
         List<ProfessorResponse> professorResponseListResult1 = professorService.filtro("Cl", "", NivelProfessorEnum.ADJUNTO, pageable);
-        List<ProfessorResponse> professorResponseListResult2 = professorService.filtro( "" , "12",NivelProfessorEnum.ADJUNTO, pageable);
+        List<ProfessorResponse> professorResponseListResult2 = professorService.filtro("" , "12",NivelProfessorEnum.ADJUNTO, pageable);
         List<ProfessorResponse> professorResponseListResult3 = professorService.filtro("", "", NivelProfessorEnum.ADJUNTO, pageable);
 
         Assertions.assertNotNull(professorResponseListResult1);
@@ -131,6 +133,27 @@ public class ProfessorServiceUnitTest {
         Assertions.assertInstanceOf(ProfessorResponse.class, professorResponseListResult1.get(0));
         Assertions.assertInstanceOf(ProfessorResponse.class, professorResponseListResult2.get(0));
         Assertions.assertInstanceOf(ProfessorResponse.class, professorResponseListResult3.get(0));
+
+    }
+
+    private ProfessorRequest buildProfessorRequest() {
+        return ProfessorRequest.builder()
+                .nome("Professor Tiburcio")
+                .cpf("12345689")
+                .email("professor@gmail.com")
+                .telefone("977885522")
+                .dataAdmissao(LocalDate.now())
+                .nivel(NivelProfessorEnum.ADJUNTO)
+                .endereco(
+                        EnderecoRequest.builder()
+                                .logradouro("rua das ameixeiras")
+                                .cep("03369-250")
+                                .complemento("na rua da feira de domingo")
+                                .cidade("cubatão")
+                                .estado("São Paulo")
+                                .build()
+                )
+                .build();
 
     }
 }

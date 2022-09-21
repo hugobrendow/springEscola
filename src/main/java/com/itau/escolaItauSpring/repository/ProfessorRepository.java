@@ -13,10 +13,7 @@ import java.util.UUID;
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, UUID> {
 
-       @Query("select p from Professor p where 1 = 1 and " +
-               "( p.nome is null or p.nome like '%:nome%' ) and " +
-               "( p.cpf is null or p.cpf like '%:cpf%' ) and " +
-               "( p.nivel is null or p.nivel = :nivel )")
-       Page<Professor> findProfessorByParam(String nome, String cpf, NivelProfessorEnum nivel, Pageable pageable);
+
+       Page<Professor> findProfessorByNomeContainingIgnoreCaseOrCpfContainingOrNivel(String nome, String cpf, NivelProfessorEnum nivel, Pageable pageable);
 
 }
