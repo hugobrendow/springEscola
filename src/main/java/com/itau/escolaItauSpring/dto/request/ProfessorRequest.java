@@ -6,10 +6,7 @@ import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Getter
@@ -19,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ProfessorRequest {
     @NotBlank
-    @Min(value = 3, message = "o nome deve ter no mínimo 3 caracteres")
+    @Size(min = 3, message = "O nome deve ter no mínimo 3 caracteres")
     private String nome;
     @CPF
     private String cpf;

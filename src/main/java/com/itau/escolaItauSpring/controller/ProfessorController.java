@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,19 +37,20 @@ public class ProfessorController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @Secured({"ROLE_COORDENADOR", "ROLE_SECRETARIO"})
     public ResponseEntity<ProfessorResponse> cadastrar(@Valid @RequestBody ProfessorRequest professorRequest,
                                                        UriComponentsBuilder uriComponentsBuilder) {
         ProfessorResponse professorResponse = professorService.adicionar(professorRequest);
         URI uri = uriComponentsBuilder.path("/professor/{id}").buildAndExpand(professorResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(professorResponse);
     }
-
     @ApiOperation(value = "Buscar professor por ID")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Professor encontrado com sucesso", response = ProfessorResponse.class),
         @ApiResponse(code = 404, message = "Professor não encontrado", response = CustomException.class),
         @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
     @GetMapping("/{id}")
+    @Secured({"ROLE_COORDENADOR", "ROLE_SECRETARIO", "ROLE_PROFESSOR"})
     public ResponseEntity<ProfessorResponse> buscarPorId(@PathVariable UUID id) {
         ProfessorResponse professorResponse = professorService.buscarPorId(id);
         return ResponseEntity.ok(professorResponse);
@@ -61,6 +63,7 @@ public class ProfessorController {
         @ApiResponse(code = 401, message = "Usuário não possuí permissão para este método"),
         @ApiResponse(code = 500, message = "Erro interno", response = CustomException.class) })
     @DeleteMapping("/{id}")
+    @Secured({"ROLE_COORDENADOR", "ROLE_SECRETARIO"})
     public ResponseEntity<Void> remover(@PathVariable UUID id) {
         professorService.removerProfessor(id);
         return ResponseEntity.ok().build();
@@ -73,6 +76,7 @@ public class ProfessorController {
         @ApiResponse(code = 404, message = "Professor não encontrado", response = CustomException.class),
         @ApiResponse(code = 500, message = "Erro interno", response = CustomException.class) })
     @PutMapping("/{id}")
+    @Secured({"ROLE_COORDENADOR", "ROLE_SECRETARIO"})
     public ResponseEntity<ProfessorResponse> atualizar(@PathVariable UUID id,
                                                        @RequestBody @Valid ProfessorRequest professorRequest) {
         ProfessorResponse professorResponse = professorService.atualizar(id, professorRequest);
@@ -85,6 +89,7 @@ public class ProfessorController {
         @ApiResponse(code = 404, message = "Professor(es) não encontrado(s)", response = CustomException.class),
         @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
     @GetMapping
+    @Secured({"ROLE_COORDENADOR", "ROLE_SECRETARIO", "ROLE_PROFESSOR"})
     public ResponseEntity<List<ProfessorResponse>> listagem(@RequestParam(defaultValue = "0") int page,
                                                             @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -97,6 +102,7 @@ public class ProfessorController {
         @ApiResponse(code = 404, message = "Professor(es) não encontrado(s)", response = CustomException.class),
         @ApiResponse(code = 401, message = "Usuário não possuí permissão para este recurso"), })
     @GetMapping("/filtro")
+    @Secured({"ROLE_COORDENADOR", "ROLE_SECRETARIO", "ROLE_PROFESSOR"})
     public ResponseEntity<List<ProfessorResponse>> listagemFiltro(@RequestParam(required = false) String nome,
                                                                   @RequestParam(required = false) String cpf,
                                                                   @RequestParam(required = false) NivelProfessorEnum nivel,

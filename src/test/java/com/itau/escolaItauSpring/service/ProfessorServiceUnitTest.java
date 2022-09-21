@@ -114,7 +114,7 @@ public class ProfessorServiceUnitTest {
         Pageable pageable = Mockito.mock(Pageable.class);
         Page<Professor> professorPage = Mockito.mock(Page.class);
 
-        Mockito.when(professorRepository.findProfessorByParam(any(String.class), any(String.class), any(NivelProfessorEnum.class), any(Pageable.class))).thenReturn(professorPage);
+        Mockito.when(professorRepository.findProfessorByNomeContainingIgnoreCaseOrCpfContainingOrNivel(any(String.class), any(String.class), any(NivelProfessorEnum.class), any(Pageable.class))).thenReturn(professorPage);
 
         List<ProfessorResponse> professorResponseList = new ArrayList<>();
         ProfessorResponse professorResponse = new ProfessorResponse();

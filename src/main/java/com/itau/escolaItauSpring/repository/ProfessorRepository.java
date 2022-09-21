@@ -13,7 +13,6 @@ import java.util.UUID;
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, UUID> {
 
-
        Page<Professor> findProfessorByNomeContainingIgnoreCaseOrCpfContainingOrNivel(String nome, String cpf, NivelProfessorEnum nivel, Pageable pageable);
 
 }
