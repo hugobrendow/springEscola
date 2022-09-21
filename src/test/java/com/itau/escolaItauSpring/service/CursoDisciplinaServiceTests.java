@@ -38,6 +38,6 @@ public class CursoDisciplinaServiceTests {
     void aoBuscarPorIdDeveRetornarItemNaoExistenteException() {
         when(cursoDisciplinaRepositoryMock.findById(any(UUID.class))).thenReturn(Optional.empty());
         assertThrowsExactly(ItemNaoExistenteException.class, () -> cursoDisciplinaService.buscarPorId(UUID.randomUUID()));
-    } // TODO verificar se os testes rodam
+    }
 
 }
