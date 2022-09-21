@@ -8,13 +8,9 @@ import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.model.Matricula;
 import com.itau.escolaItauSpring.model.Turma;
 import com.itau.escolaItauSpring.repository.MatriculaRepository;
-import org.hibernate.mapping.Any;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +22,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 
@@ -41,93 +38,124 @@ class MatriculaServiceTest {
     @Mock
     private MatriculaMapper mapper;
 
-    private UUID idAluno;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        idAluno = UUID.fromString("afbd9866-3948-11ed-a261-0242ac120003");
     }
     @Test
     void testeMatricular() {
-        Mockito.when(alunoService.buscarModelPorId(any())).thenReturn(new Aluno());
-        Mockito.when(turmaService.buscarModelPorId(any())).thenReturn(new Turma());
+        when(alunoService.buscarModelPorId(any())).thenReturn(new Aluno());
+        when(turmaService.buscarModelPorId(any())).thenReturn(new Turma());
 
-        Mockito.when(matriculaRepository.findByAlunoIdAndTurmaId(any(),any())).thenReturn(Optional.empty());
-        Mockito.when(turmaService.verificarSeHaVagas(any())).thenReturn(true);
+        when(matriculaRepository.findByAlunoIdAndTurmaId(any(),any())).thenReturn(Optional.empty());
+        when(turmaService.verificarSeHaVagas(any())).thenReturn(true);
 
-        Mockito.when(matriculaRepository.save(any())).thenReturn(new Matricula());
-        Mockito.doNothing().when(turmaService).atualizarVagas(any());
+        when(matriculaRepository.save(any())).thenReturn(new Matricula());
+        doNothing().when(turmaService).atualizarVagas(any());
+        when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
 
-        Mockito.when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
+        MatriculaResponse resultado = matriculaService.matricular(new MatriculaRequest());
 
-        var resultadoTeste = matriculaService.matricular(new MatriculaRequest());
-        Assertions.assertInstanceOf(MatriculaResponse.class, resultadoTeste);
+        assertInstanceOf(MatriculaResponse.class, resultado);
+        verify(turmaService,times(1)).atualizarVagas(any());
 
-        Mockito.verify(turmaService,times(1)).atualizarVagas(any());
     }
 
     @Test
     void testeBuscarModelPorId() {
-        Mockito.when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
-        Matricula resultado = matriculaService.buscarModelPorId(UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
-        Assertions.assertInstanceOf(Matricula.class, resultado);
-        Assertions.assertNotNull(resultado);
+        when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+
+        Matricula resultado = matriculaService.buscarModelPorId(UUID.randomUUID());
+
+        assertInstanceOf(Matricula.class, resultado);
+        assertNotNull(resultado);
     }
 
     @Test
     void testeBuscarPorId() {
-        Mockito.when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
-        Mockito.when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
+        when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+        when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
 
-        MatriculaResponse resultado = matriculaService.buscarPorId(UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
+        MatriculaResponse resultado = matriculaService.buscarPorId(UUID.randomUUID());
 
-        Assertions.assertInstanceOf(MatriculaResponse.class, resultado);
-        Assertions.assertNotNull(resultado);
+        assertInstanceOf(MatriculaResponse.class, resultado);
+        assertNotNull(resultado);
     }
 
     @Test
     void testeListarPorTurma() {
         Pageable pageable = PageRequest.of(0, 12);
-        Mockito.when(matriculaRepository.findAllByTurmaId(any(), any())).thenReturn(new PageImpl<>(List.of(new Matricula())));
-        Mockito.when(mapper.toResponseList(List.of(new Matricula()))).thenReturn(List.of(new MatriculaResponse()));
 
-        Page<MatriculaResponse> resultado = matriculaService.listarPorTurmaPaginada(pageable, UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
+        when(matriculaRepository.findAllByTurmaId(any(), any())).thenReturn(new PageImpl<>(List.of(new Matricula())));
+        when(mapper.toResponseList(List.of(new Matricula()))).thenReturn(List.of(new MatriculaResponse()));
 
-        Assertions.assertNotNull(resultado);
+        Page<MatriculaResponse> resultado = matriculaService.listarPorTurmaPaginada(pageable, UUID.randomUUID());
+
+        assertNotNull(resultado);
     }
 
     @Test
     void testeListarPorAluno() {
-        Mockito.when(matriculaRepository.findAllByAlunoId(any())).thenReturn(List.of(new Matricula()));
-        Mockito.when(mapper.toResponseList(List.of(new Matricula()))).thenReturn(List.of(new MatriculaResponse()));
+        when(matriculaRepository.findAllByAlunoId(any())).thenReturn(List.of(new Matricula()));
+        when(mapper.toResponseList(List.of(new Matricula()))).thenReturn(List.of(new MatriculaResponse()));
 
-        List<MatriculaResponse> resultado = matriculaService.listarPorAluno(idAluno);
+        List<MatriculaResponse> resultado = matriculaService.listarPorAluno(UUID.randomUUID());
 
-        Assertions.assertNotNull(resultado);
-        Assertions.assertInstanceOf(MatriculaResponse.class, resultado.get(0));
+        assertNotNull(resultado);
+        assertInstanceOf(MatriculaResponse.class, resultado.get(0));
     }
 
     @Test
     void testeTrancarMatricula() {
+        MatriculaResponse matriculaTrancada= new MatriculaResponse();
+        matriculaTrancada.setStatus(StatusMatricula.TRANCADA);
 
-        Matricula matricula = new Matricula();
+        when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+        when(matriculaRepository.save(any())).thenReturn(new Matricula());
+        when(mapper.toResponse(any())).thenReturn(matriculaTrancada);
 
-        Mockito.when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
-        Mockito.when(matriculaRepository.save(any())).thenReturn(new Matricula());
-        Mockito.when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
+        MatriculaResponse resultado = matriculaService.cancelarMatricula(UUID.randomUUID());
 
-        MatriculaResponse resultado = matriculaService.trancarMatricula(UUID.fromString("afbd9866-3948-11ed-a261-0242ac120003"));
-
-        Assertions.assertInstanceOf(MatriculaResponse.class, resultado);
-        Assertions.assertEquals(StatusMatricula.TRANCADA, resultado.getStatus());
+        assertEquals(StatusMatricula.TRANCADA, resultado.getStatus());
+        verify(matriculaRepository,times(1)).findById(any(UUID.class));
+        verify(matriculaRepository,times(1)).save(any(Matricula.class));
+        verify(mapper,times(1)).toResponse(any(Matricula.class));
     }
 
     @Test
     void testeAtivarMatricula() {
+        MatriculaResponse matriculaAtivada = new MatriculaResponse();
+        matriculaAtivada.setStatus(StatusMatricula.ATIVADA);
+
+        when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+        when(matriculaRepository.save(any())).thenReturn(new Matricula());
+        when(mapper.toResponse(any())).thenReturn(matriculaAtivada);
+
+        MatriculaResponse resultado = matriculaService.cancelarMatricula(UUID.randomUUID());
+
+        assertEquals(StatusMatricula.ATIVADA, resultado.getStatus());
+        verify(matriculaRepository,times(1)).findById(any(UUID.class));
+        verify(matriculaRepository,times(1)).save(any(Matricula.class));
+        verify(mapper,times(1)).toResponse(any(Matricula.class));
+
+
     }
 
     @Test
     void testeCancelarMatricula() {
+
+        MatriculaResponse matriculaCancelada = new MatriculaResponse();
+        matriculaCancelada.setStatus(StatusMatricula.CANCELADA);
+
+        when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+        when(matriculaRepository.save(any())).thenReturn(new Matricula());
+        when(mapper.toResponse(any())).thenReturn(matriculaCancelada);
+
+        MatriculaResponse resultado = matriculaService.cancelarMatricula(UUID.randomUUID());
+
+        assertEquals(StatusMatricula.CANCELADA, resultado.getStatus());
+        verify(matriculaRepository,times(1)).findById(any(UUID.class));
+        verify(matriculaRepository,times(1)).save(any(Matricula.class));
+        verify(mapper,times(1)).toResponse(any(Matricula.class));
     }
 }
