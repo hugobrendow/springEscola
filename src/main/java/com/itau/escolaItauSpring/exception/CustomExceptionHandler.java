@@ -39,12 +39,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, exceptionDetail,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> detalhes = ex.getBindingResult().getAllErrors().stream()
                 .map(obj -> obj.getDefaultMessage())
                 .collect(Collectors.toList());
         return handleExceptionInternal(ex, new CustomException(detalhes, HttpStatus.BAD_REQUEST.value()),
-                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+                new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }
