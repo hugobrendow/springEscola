@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/ocorrencia")
 @RequiredArgsConstructor
+@RolesAllowed({"PROFESSOR", "COORDENADOR", "SECRETARIA"})
 public class OcorrenciaController {
 
     private final OcorrenciaService ocorrenciaService;
@@ -63,6 +65,7 @@ public class OcorrenciaController {
         return ResponseEntity.created(uri).body(ocorrenciaResponse);
     }
 
+    @RolesAllowed("COORDENADOR")
     @ApiOperation(value = "Editar ocorrencia", response = OcorrenciaResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Ocorrencia editada com sucesso", response = OcorrenciaResponse.class),
@@ -75,6 +78,7 @@ public class OcorrenciaController {
         return ResponseEntity.ok(ocorrenciaService.alterarOcorrencia(id, request));
     }
 
+    @RolesAllowed("COORDENADOR")
     @ApiOperation(value = "Deletar ocorrência por ID")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Ocorrência deletada com sucesso", response = OcorrenciaResponse.class),
