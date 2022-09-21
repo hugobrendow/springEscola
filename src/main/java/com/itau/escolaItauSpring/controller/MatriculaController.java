@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/matricula")
 @RequiredArgsConstructor
+@RolesAllowed("ROLE_COORDENADOR")
 public class MatriculaController {
 
     private final MatriculaService matriculaService;

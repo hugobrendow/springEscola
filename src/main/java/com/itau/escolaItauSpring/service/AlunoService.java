@@ -6,7 +6,6 @@ import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.mapper.AlunoMapper;
 import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.repository.AlunoRepository;
-import com.itau.escolaItauSpring.repository.MatriculaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +38,7 @@ public class AlunoService {
         repository.deleteById(id);
     }
 
-    public Aluno buscarModelPorId(UUID id){
+    public Aluno buscarModelPorId(UUID id) {
         return repository.findById(id)
                 .orElseThrow(ItemNaoExistenteException::new);
     }

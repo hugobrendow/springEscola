@@ -2,13 +2,10 @@ package com.itau.escolaItauSpring.model;
 
 import com.itau.escolaItauSpring.enums.StatusMatricula;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,7 +26,7 @@ public class Matricula {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numero;
 
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private StatusMatricula status = StatusMatricula.ATIVADA;
 
     @CreationTimestamp
@@ -41,7 +38,7 @@ public class Matricula {
     @ManyToOne
     private Turma turma;
 
-    public Matricula (Aluno aluno, Turma turma){
+    public Matricula(Aluno aluno, Turma turma) {
         this.aluno = aluno;
         this.turma = turma;
     }

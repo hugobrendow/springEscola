@@ -12,7 +12,9 @@ import com.itau.escolaItauSpring.model.Turma;
 import com.itau.escolaItauSpring.repository.MatriculaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +27,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 
 class MatriculaServiceTest {
@@ -44,12 +45,13 @@ class MatriculaServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
     @Test
     void testeMatricular() {
         when(alunoService.buscarModelPorId(any())).thenReturn(new Aluno());
         when(turmaService.buscarModelPorId(any())).thenReturn(new Turma());
 
-        when(matriculaRepository.findByAlunoIdAndTurmaId(any(),any())).thenReturn(Optional.empty());
+        when(matriculaRepository.findByAlunoIdAndTurmaId(any(), any())).thenReturn(Optional.empty());
         when(turmaService.verificarSeHaVagas(any())).thenReturn(true);
 
         when(matriculaRepository.save(any())).thenReturn(new Matricula());
@@ -59,31 +61,31 @@ class MatriculaServiceTest {
         MatriculaResponse resultado = matriculaService.matricular(new MatriculaRequest());
 
         assertInstanceOf(MatriculaResponse.class, resultado);
-        verify(turmaService,times(1)).atualizarVagas(any());
+        verify(turmaService, times(1)).atualizarVagas(any());
 
     }
 
     @Test
-    void testNaoHaVagasException(){
+    void testNaoHaVagasException() {
         when(alunoService.buscarModelPorId(any())).thenReturn(new Aluno());
         when(turmaService.buscarModelPorId(any())).thenReturn(new Turma());
-        when(matriculaRepository.findByAlunoIdAndTurmaId(any(),any())).thenReturn(Optional.empty());
+        when(matriculaRepository.findByAlunoIdAndTurmaId(any(), any())).thenReturn(Optional.empty());
         when(turmaService.verificarSeHaVagas(any())).thenReturn(false);
 
+        verify(turmaService, times(1)).verificarSeHaVagas(any());
         assertThrows(NaoHaVagasException.class,
                 () -> matriculaService.matricular(new MatriculaRequest()));
-        verify(turmaService,times(1)).verificarSeHaVagas(any());
     }
 
     @Test
-    void AlunoJaMatriculadoException(){
+    void AlunoJaMatriculadoException() {
         when(alunoService.buscarModelPorId(any())).thenReturn(new Aluno());
         when(turmaService.buscarModelPorId(any())).thenReturn(new Turma());
-        when(matriculaRepository.findByAlunoIdAndTurmaId(any(),any())).thenReturn(Optional.of(new Matricula()));
+        when(matriculaRepository.findByAlunoIdAndTurmaId(any(), any())).thenReturn(Optional.of(new Matricula()));
 
         assertThrows(AlunoJaMatriculadoException.class,
                 () -> matriculaService.matricular(new MatriculaRequest()));
-        verify(matriculaRepository,times(1)).findByAlunoIdAndTurmaId(any(), any());
+        verify(matriculaRepository, times(1)).findByAlunoIdAndTurmaId(any(), any());
     }
 
     @Test
@@ -132,7 +134,7 @@ class MatriculaServiceTest {
 
     @Test
     void testeTrancarMatricula() {
-        MatriculaResponse matriculaTrancada= new MatriculaResponse();
+        MatriculaResponse matriculaTrancada = new MatriculaResponse();
         matriculaTrancada.setStatus(StatusMatricula.TRANCADA);
 
         when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
@@ -142,9 +144,9 @@ class MatriculaServiceTest {
         MatriculaResponse resultado = matriculaService.trancarMatricula(UUID.randomUUID());
 
         assertEquals(StatusMatricula.TRANCADA, resultado.getStatus());
-        verify(matriculaRepository,times(1)).findById(any(UUID.class));
-        verify(matriculaRepository,times(1)).save(any(Matricula.class));
-        verify(mapper,times(1)).toResponse(any(Matricula.class));
+        verify(matriculaRepository, times(1)).findById(any(UUID.class));
+        verify(matriculaRepository, times(1)).save(any(Matricula.class));
+        verify(mapper, times(1)).toResponse(any(Matricula.class));
     }
 
     @Test
@@ -159,9 +161,9 @@ class MatriculaServiceTest {
         MatriculaResponse resultado = matriculaService.ativarMatricula(UUID.randomUUID());
 
         assertEquals(StatusMatricula.ATIVADA, resultado.getStatus());
-        verify(matriculaRepository,times(1)).findById(any(UUID.class));
-        verify(matriculaRepository,times(1)).save(any(Matricula.class));
-        verify(mapper,times(1)).toResponse(any(Matricula.class));
+        verify(matriculaRepository, times(1)).findById(any(UUID.class));
+        verify(matriculaRepository, times(1)).save(any(Matricula.class));
+        verify(mapper, times(1)).toResponse(any(Matricula.class));
 
 
     }
@@ -179,8 +181,8 @@ class MatriculaServiceTest {
         MatriculaResponse resultado = matriculaService.cancelarMatricula(UUID.randomUUID());
 
         assertEquals(StatusMatricula.CANCELADA, resultado.getStatus());
-        verify(matriculaRepository,times(1)).findById(any(UUID.class));
-        verify(matriculaRepository,times(1)).save(any(Matricula.class));
-        verify(mapper,times(1)).toResponse(any(Matricula.class));
+        verify(matriculaRepository, times(1)).findById(any(UUID.class));
+        verify(matriculaRepository, times(1)).save(any(Matricula.class));
+        verify(mapper, times(1)).toResponse(any(Matricula.class));
     }
 }
