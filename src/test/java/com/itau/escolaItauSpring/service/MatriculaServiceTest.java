@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.service;
 
 import com.itau.escolaItauSpring.dto.request.MatriculaRequest;
 import com.itau.escolaItauSpring.dto.response.MatriculaResponse;
+import com.itau.escolaItauSpring.enums.StatusMatricula;
 import com.itau.escolaItauSpring.mapper.MatriculaMapper;
 import com.itau.escolaItauSpring.model.Aluno;
 import com.itau.escolaItauSpring.model.Matricula;
@@ -12,10 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,7 +32,6 @@ import static org.mockito.Mockito.times;
 class MatriculaServiceTest {
     @InjectMocks
     private MatriculaService matriculaService;
-
     @Mock
     private MatriculaRepository matriculaRepository;
     @Mock
@@ -44,10 +41,12 @@ class MatriculaServiceTest {
     @Mock
     private MatriculaMapper mapper;
 
+    private UUID idAluno;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        carregarClasses();
+        idAluno = UUID.fromString("afbd9866-3948-11ed-a261-0242ac120003");
     }
     @Test
     void testeMatricular() {
@@ -80,7 +79,9 @@ class MatriculaServiceTest {
     void testeBuscarPorId() {
         Mockito.when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
         Mockito.when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
+
         MatriculaResponse resultado = matriculaService.buscarPorId(UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
+
         Assertions.assertInstanceOf(MatriculaResponse.class, resultado);
         Assertions.assertNotNull(resultado);
     }
@@ -90,16 +91,36 @@ class MatriculaServiceTest {
         Pageable pageable = PageRequest.of(0, 12);
         Mockito.when(matriculaRepository.findAllByTurmaId(any(), any())).thenReturn(new PageImpl<>(List.of(new Matricula())));
         Mockito.when(mapper.toResponseList(List.of(new Matricula()))).thenReturn(List.of(new MatriculaResponse()));
+
         Page<MatriculaResponse> resultado = matriculaService.listarPorTurmaPaginada(pageable, UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
+
         Assertions.assertNotNull(resultado);
     }
 
     @Test
     void testeListarPorAluno() {
+        Mockito.when(matriculaRepository.findAllByAlunoId(any())).thenReturn(List.of(new Matricula()));
+        Mockito.when(mapper.toResponseList(List.of(new Matricula()))).thenReturn(List.of(new MatriculaResponse()));
+
+        List<MatriculaResponse> resultado = matriculaService.listarPorAluno(idAluno);
+
+        Assertions.assertNotNull(resultado);
+        Assertions.assertInstanceOf(MatriculaResponse.class, resultado.get(0));
     }
 
     @Test
     void testeTrancarMatricula() {
+
+        Matricula matricula = new Matricula();
+
+        Mockito.when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+        Mockito.when(matriculaRepository.save(any())).thenReturn(new Matricula());
+        Mockito.when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
+
+        MatriculaResponse resultado = matriculaService.trancarMatricula(UUID.fromString("afbd9866-3948-11ed-a261-0242ac120003"));
+
+        Assertions.assertInstanceOf(MatriculaResponse.class, resultado);
+        Assertions.assertEquals(StatusMatricula.TRANCADA, resultado.getStatus());
     }
 
     @Test
@@ -108,9 +129,5 @@ class MatriculaServiceTest {
 
     @Test
     void testeCancelarMatricula() {
-    }
-
-    void carregarClasses(){
-        Matricula matricula = new Matricula();
     }
 }

@@ -77,7 +77,8 @@ public class MatriculaService {
     }
 
     public MatriculaResponse trancarMatricula(UUID id) {
-        return mapper.toResponse(alterarStatus(id, StatusMatricula.TRANCADA));
+        return mapper.toResponse(alterarStatus(id,
+                StatusMatricula.TRANCADA));
     }
 
     public MatriculaResponse ativarMatricula(UUID id) {
