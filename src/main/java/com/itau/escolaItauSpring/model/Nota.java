@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +14,7 @@ public class Nota {
     @GeneratedValue
     @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
-    private Double nota;
+    private BigDecimal nota;
 
     @JoinColumn(name = "matricula_id")
     @ManyToOne
@@ -24,7 +25,7 @@ public class Nota {
     private CursoDisciplina cursoDisciplina;
 
     public Nota() {}
-    public Nota(Double nota, Matricula matricula, CursoDisciplina cursoDisciplina) {
+    public Nota(BigDecimal nota, Matricula matricula, CursoDisciplina cursoDisciplina) {
         this.nota = nota;
         this.matricula = matricula;
         this.cursoDisciplina = cursoDisciplina;
