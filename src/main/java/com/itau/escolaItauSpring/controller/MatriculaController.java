@@ -25,7 +25,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/matricula")
 @RequiredArgsConstructor
-@RolesAllowed("ROLE_COORDENADOR")
+@RolesAllowed({"ROLE_COORDENADOR", "ROLE_SECRETARIO"})
 public class MatriculaController {
 
     private final MatriculaService matriculaService;
@@ -63,6 +63,7 @@ public class MatriculaController {
                     responseContainer = "List"),
     })
     @GetMapping("/turma/{id}")
+    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_SECRETARIO", "ROLE_PROFESSOR"})
     public ResponseEntity<Page<MatriculaResponse>> listaPorTurmaPaginada(@PageableDefault(size = 12,
             direction = Sort.Direction.ASC) Pageable pageable, @PathVariable UUID id) {
         Page<MatriculaResponse> matriculas = matriculaService.listarPorTurmaPaginada(pageable, id);
@@ -78,6 +79,7 @@ public class MatriculaController {
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/aluno/{idAluno}")
+    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_SECRETARIO", "ROLE_ALUNO", "ROLE_PROFESSOR"})
     public ResponseEntity<List<MatriculaResponse>> listarPorAluno(@PathVariable UUID idAluno) {
         List<MatriculaResponse> matriculaResponse = matriculaService.listarPorAluno(idAluno);
         return ResponseEntity.ok(matriculaResponse);
