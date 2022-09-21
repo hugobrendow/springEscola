@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -48,7 +49,7 @@ public class ModelFactory {
     public static Disciplina disciplina() {
         return Disciplina.builder()
                 .id(UUID.randomUUID())
-                .nome("Disciplina")
+                .nome("Disciplina" + new Random().nextInt())
                 .cargaHoraria(20)
                 .build();
     }
@@ -56,7 +57,7 @@ public class ModelFactory {
     public static Curso curso() {
         Curso curso = new Curso();
         curso.setId(UUID.randomUUID());
-        curso.setNome("Nome");
+        curso.setNome("Curso" + new Random().nextInt());
         curso.setDescricao("Descricao");
         return curso;
     }
