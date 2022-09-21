@@ -17,8 +17,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -64,14 +70,28 @@ class MatriculaServiceTest {
 
     @Test
     void testeBuscarModelPorId() {
+        Mockito.when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+        Matricula resultado = matriculaService.buscarModelPorId(UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
+        Assertions.assertInstanceOf(Matricula.class, resultado);
+        Assertions.assertNotNull(resultado);
     }
 
     @Test
     void testeBuscarPorId() {
+        Mockito.when(matriculaRepository.findById(any())).thenReturn(Optional.of(new Matricula()));
+        Mockito.when(mapper.toResponse(any())).thenReturn(new MatriculaResponse());
+        MatriculaResponse resultado = matriculaService.buscarPorId(UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
+        Assertions.assertInstanceOf(MatriculaResponse.class, resultado);
+        Assertions.assertNotNull(resultado);
     }
 
     @Test
     void testeListarPorTurma() {
+        Pageable pageable = PageRequest.of(0, 12);
+        Mockito.when(matriculaRepository.findAllByTurmaId(any(), any())).thenReturn(new PageImpl<>(List.of(new Matricula())));
+        Mockito.when(mapper.toResponseList(List.of(new Matricula()))).thenReturn(List.of(new MatriculaResponse()));
+        Page<MatriculaResponse> resultado = matriculaService.listarPorTurmaPaginada(pageable, UUID.fromString("afbd9866-3948-11ed-a261-0242ac120002"));
+        Assertions.assertNotNull(resultado);
     }
 
     @Test

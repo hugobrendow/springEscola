@@ -65,7 +65,7 @@ public class MatriculaService {
     }
 
 
-    public Page<MatriculaResponse> listaPorTurmaPaginada(Pageable pageable, UUID idTurma) {
+    public Page<MatriculaResponse> listarPorTurmaPaginada(Pageable pageable, UUID idTurma) {
         Page<Matricula> matriculas = repository.findAllByTurmaId(pageable, idTurma);
         List<MatriculaResponse> matriculasPageable = mapper.toResponseList(matriculas.getContent());
         return new PageImpl<>(matriculasPageable, pageable, matriculas.getSize());

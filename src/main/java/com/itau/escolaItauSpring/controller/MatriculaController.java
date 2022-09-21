@@ -63,7 +63,7 @@ public class MatriculaController {
     @GetMapping("/turma/{id}")
     public ResponseEntity<Page<MatriculaResponse>> listaPorTurmaPaginada(@PageableDefault(size = 12,
             direction = Sort.Direction.ASC) Pageable pageable, @PathVariable UUID id) {
-        Page<MatriculaResponse> matriculas = matriculaService.listaPorTurmaPaginada(pageable, id);
+        Page<MatriculaResponse> matriculas = matriculaService.listarPorTurmaPaginada(pageable, id);
         return ResponseEntity.ok(matriculas);
     }
 
