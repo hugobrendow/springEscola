@@ -1,12 +1,8 @@
 package com.itau.escolaItauSpring.mapper;
 
 import com.itau.escolaItauSpring.dto.request.AlunoRequest;
-import com.itau.escolaItauSpring.dto.request.CursoRequest;
 import com.itau.escolaItauSpring.dto.response.AlunoResponse;
-import com.itau.escolaItauSpring.dto.response.CursoResponse;
 import com.itau.escolaItauSpring.model.Aluno;
-import com.itau.escolaItauSpring.model.Curso;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
 import java.util.List;
