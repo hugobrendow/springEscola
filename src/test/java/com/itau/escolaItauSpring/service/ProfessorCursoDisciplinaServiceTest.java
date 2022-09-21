@@ -33,10 +33,36 @@ public class ProfessorCursoDisciplinaServiceTest {
     @Mock
     ProfessorCursoDisciplinaRepository professorCursoDisciplinaRepository;
 
+    @Mock
+    CursoDisciplinaService cursoDisciplinaService;
+
+    @Mock
+    ProfessorRepository professorRepository;
+
+    @Test
+    @DisplayName("Ao Buscar Professor Inexistente Por Id Lancar ItemNaoExistenteException")
+    void aoBuscarProfessorInexistentePorIdLancarItemNaoExistenteException() {
+        VinculaCursoRequest vinculaCursoRequest = ModelFactory.vinculaCursoRequest();
+
+        when(professorRepository.findById(any())).thenReturn(Optional.empty());
+        assertThrows(ItemNaoExistenteException.class, () -> professorCursoDisciplinaService.vincularCurso(vinculaCursoRequest));
+    }
+
+    //TODO Corrigir mapper
     @Test
     @DisplayName("Deve vincular um professor a uma disciplina")
-    public void vincularCurso(){
+    public void aoVincularCursoRetornaSucesso(){
+        Professor professor = ModelFactory.professor();
+        CursoDisciplina cursoDisciplina = ModelFactory.cursoDisciplina();
+        when(professorRepository.findById(any())).thenReturn(Optional.of(professor));
+        when(cursoDisciplinaService.buscarPorId(any())).thenReturn(cursoDisciplina);
+        when(professorCursoDisciplinaRepository.save(any())).thenReturn(new ProfessorCursoDisciplina());
+        when(professorCursoDisciplinaMapper.toResponse(any())).thenCallRealMethod();
 
+        var result = professorCursoDisciplinaService.vincularCurso(ModelFactory.vinculaCursoRequest());
+
+        assertEquals(result.getProfessor().getId(), professor.getId());
+        assertEquals(result.getCursoDisciplina().getId(), cursoDisciplina.getId());
     }
 
 }
