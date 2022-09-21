@@ -34,3 +34,4 @@ INSERT INTO Matricula VALUES (random_uuid(), current_date(), 3, 'ATIVADA', '0dca
 INSERT INTO Matricula VALUES (random_uuid(), current_date(), 4, 'ATIVADA', '0dca7292-3919-11ed-a261-0242ac120004', 'd014f344-382f-11ed-a261-0242ac120032');
 INSERT INTO Matricula VALUES (random_uuid(), current_date(), 5, 'ATIVADA', '0dca7292-3919-11ed-a261-0242ac120050', 'd014f344-382f-11ed-a261-0242ac120032');
 INSERT INTO Matricula VALUES (random_uuid(), current_date(), 6, 'ATIVADA', '0dca7292-3919-11ed-a261-0242ac120051', 'd014f344-382f-11ed-a261-0242ac120032');
+INSERT INTO Matricula VALUES (random_uuid(), current_date(), 7, 'ATIVADA', '0dca7292-3919-11ed-a261-0242ac120051', 'd014f344-382f-11ed-a261-0242ac120003');
