@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.service;
 
+import com.itau.escolaItauSpring.ModelFactory;
 import com.itau.escolaItauSpring.model.Curso;
 import com.itau.escolaItauSpring.model.CursoDisciplina;
 import com.itau.escolaItauSpring.model.Disciplina;
@@ -28,10 +29,8 @@ public class CursoDisciplinaServiceIntegrationTest {
 
     @Test
     public void buscarPorIdTest() {
-        Curso curso = new Curso();
-        Disciplina disciplina = new Disciplina();
-        curso.setNome("java");
-        disciplina.setNome("sss");
+        Curso curso = ModelFactory.curso();
+        Disciplina disciplina = ModelFactory.disciplina();
         cursoRepository.save(curso);
         disciplinaRepository.save(disciplina);
         CursoDisciplina cursoDisciplina = new CursoDisciplina();
