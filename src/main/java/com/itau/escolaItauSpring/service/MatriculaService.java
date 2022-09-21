@@ -64,13 +64,9 @@ public class MatriculaService {
         return mapper.toResponse(buscarModelPorId(id));
     }
 
-    public List<MatriculaResponse> listarPorTurma(UUID idTurma) {
-        List<Matricula> matriculas = repository.findAllByTurmaId(idTurma);
-        return mapper.toResponseList(matriculas);
-    }
 
-    public Page<MatriculaResponse> listaPaginada(Pageable pageable){
-        Page<Matricula> matriculas = repository.findAll(pageable);
+    public Page<MatriculaResponse> listaPorTurmaPaginada(Pageable pageable, UUID idTurma) {
+        Page<Matricula> matriculas = repository.findAllByTurmaId(pageable, idTurma);
         List<MatriculaResponse> matriculasPageable = mapper.toResponseList(matriculas.getContent());
         return new PageImpl<>(matriculasPageable, pageable, matriculas.getSize());
     }

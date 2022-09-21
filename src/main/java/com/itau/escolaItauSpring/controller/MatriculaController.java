@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,24 +60,11 @@ public class MatriculaController {
                     response = MatriculaResponse.class,
                     responseContainer = "List"),
     })
-    @GetMapping
-    public ResponseEntity<Page<MatriculaResponse>> listarPaginado(Pageable pageable) {
-        Page<MatriculaResponse> matriculas = matriculaService.listaPaginada(pageable);
+    @GetMapping("/turma/{id}")
+    public ResponseEntity<Page<MatriculaResponse>> listaPorTurmaPaginada(@PageableDefault(size = 12,
+            direction = Sort.Direction.ASC) Pageable pageable, @PathVariable UUID id) {
+        Page<MatriculaResponse> matriculas = matriculaService.listaPorTurmaPaginada(pageable, id);
         return ResponseEntity.ok(matriculas);
-    }
-
-    @ApiOperation(value = "Buscar Matrículas por Turma")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Matrículas encontradas!",
-                    response = MatriculaResponse.class,
-                    responseContainer = "List"),
-            @ApiResponse(code = 404, message = "Turma não existente!"),
-    })
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/turma/{idTurma}")
-    public ResponseEntity<List<MatriculaResponse>> listarPorTurma(@PathVariable UUID idTurma) {
-        List<MatriculaResponse> matriculaResponse = matriculaService.listarPorTurma(idTurma);
-        return ResponseEntity.ok(matriculaResponse);
     }
 
     @ApiOperation(value = "Buscar Matrículas por Aluno")
