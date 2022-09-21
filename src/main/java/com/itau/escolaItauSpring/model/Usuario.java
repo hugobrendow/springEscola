@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collections;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
@@ -22,8 +24,10 @@ public class Usuario {
     @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
 
+    @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     private Boolean accountNonExpired = true;
@@ -35,7 +39,8 @@ public class Usuario {
     private Boolean enabled = true;
 
     @OneToMany(mappedBy = "usuario")
-    private Set<UsuarioPerfil> usuarioPerfils;
+    private Set<UsuarioPerfil> usuarioPerfis;
+
     public UserDetails getUserDetails(){
         UserDetails user = new User(getUsername(), getPassword(), getEnabled(),
         getAccountNonExpired(), getCredentialsNonExpired(),
@@ -44,11 +49,11 @@ public class Usuario {
     }
 
     private Set<? extends GrantedAuthority> convertToAuthorities() {
-        if(CollectionUtils.isEmpty(usuarioPerfils)) {
+        if(CollectionUtils.isEmpty(usuarioPerfis)) {
             return Collections.emptySet();
         }
 
-        return usuarioPerfils.stream()
+        return usuarioPerfis.stream()
                 .map(UsuarioPerfil::getPerfil)
                 .map(Perfil::getPermissao)
                 .map(SimpleGrantedAuthority::new)

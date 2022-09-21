@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,5 +17,9 @@ public class Perfil {
     @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
 
+    @Column(nullable = false, unique = true)
     private String permissao;
+
+    @OneToMany(mappedBy = "perfil")
+    private Set<UsuarioPerfil> usuarioPerfis;
 }
