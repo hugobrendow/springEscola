@@ -31,8 +31,8 @@ public class ProfessorCursoDisciplinaService {
                 .titular(vinculaCursoRequest.getTitular())
                 .build();
 
-        ProfessorCursoDisciplina professorCursoDisciplinaSalvo = repository.save(professorCursoDisciplina);
+        repository.save(professorCursoDisciplina);
 
-        return professorCursoDisciplinaMapper.toResponse(professorCursoDisciplinaSalvo);
+        return professorCursoDisciplinaMapper.toResponse(professorCursoDisciplina);
     }
 }
