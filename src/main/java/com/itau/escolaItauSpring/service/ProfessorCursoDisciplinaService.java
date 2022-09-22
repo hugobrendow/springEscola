@@ -23,7 +23,7 @@ public class ProfessorCursoDisciplinaService {
 
     public VinculaCursoResponse vincularCurso(VinculaCursoRequest vinculaCursoRequest) {
         Professor professor = professorRepository.findById(vinculaCursoRequest.getProfessorId()).orElseThrow(ItemNaoExistenteException::new);
-        CursoDisciplina cursoDisciplina = cursoDisciplinaService.buscarPorId(vinculaCursoRequest.getCursoDisciplinaId());
+        CursoDisciplina cursoDisciplina = cursoDisciplinaService.buscarModelPorId(vinculaCursoRequest.getCursoDisciplinaId());
 
         ProfessorCursoDisciplina professorCursoDisciplina = ProfessorCursoDisciplina.builder()
                 .professor(professor)

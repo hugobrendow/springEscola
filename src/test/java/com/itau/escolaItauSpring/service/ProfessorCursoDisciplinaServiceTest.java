@@ -57,7 +57,7 @@ public class ProfessorCursoDisciplinaServiceTest {
         Professor professor = ModelFactory.professor();
         CursoDisciplina cursoDisciplina = ModelFactory.cursoDisciplina();
         when(professorRepository.findById(any())).thenReturn(Optional.of(professor));
-        when(cursoDisciplinaService.buscarPorId(any())).thenReturn(cursoDisciplina);
+        when(cursoDisciplinaService.buscarModelPorId(any())).thenReturn(cursoDisciplina);
         when(professorCursoDisciplinaRepository.save(any())).thenReturn(new ProfessorCursoDisciplina());
         when(professorCursoDisciplinaMapper.toResponse(any())).thenCallRealMethod();
 

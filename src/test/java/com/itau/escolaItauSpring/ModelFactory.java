@@ -27,7 +27,7 @@ public class ModelFactory {
         Endereco endereco = new Endereco();
         Professor professor = new Professor();
         professor.setNome("Thiago");
-        professor.setCpf("111111");
+        professor.setCpf("11111111111");
         professor.setEmail("asfasf@gmail.com");
         professor.setTelefone("00000");
         professor.setDataAdmissao(LocalDate.of(2022,10,19));

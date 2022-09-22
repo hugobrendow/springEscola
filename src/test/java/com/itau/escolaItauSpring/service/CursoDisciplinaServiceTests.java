@@ -29,7 +29,7 @@ public class CursoDisciplinaServiceTests {
     void aoBuscarPorIdDeveRetornarSemErro() {
         Optional<CursoDisciplina> cursoDisciplinaEsperado = Optional.of(new CursoDisciplina());
         when(cursoDisciplinaRepositoryMock.findById(any(UUID.class))).thenReturn(cursoDisciplinaEsperado);
-        CursoDisciplina cursoDisciplinaRetornado = cursoDisciplinaService.buscarPorId(UUID.randomUUID());
+        CursoDisciplina cursoDisciplinaRetornado = cursoDisciplinaService.buscarModelPorId(UUID.randomUUID());
 
         assertEquals(cursoDisciplinaEsperado.get(), cursoDisciplinaRetornado);
     }
@@ -37,7 +37,7 @@ public class CursoDisciplinaServiceTests {
     @Test
     void aoBuscarPorIdDeveRetornarItemNaoExistenteException() {
         when(cursoDisciplinaRepositoryMock.findById(any(UUID.class))).thenReturn(Optional.empty());
-        assertThrowsExactly(ItemNaoExistenteException.class, () -> cursoDisciplinaService.buscarPorId(UUID.randomUUID()));
+        assertThrowsExactly(ItemNaoExistenteException.class, () -> cursoDisciplinaService.buscarModelPorId(UUID.randomUUID()));
     }
 
 }

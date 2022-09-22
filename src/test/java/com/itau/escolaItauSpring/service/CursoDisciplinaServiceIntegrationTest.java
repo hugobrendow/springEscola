@@ -40,7 +40,7 @@ public class CursoDisciplinaServiceIntegrationTest {
         cursoDisciplina.setDisciplina(disciplina);
 
         cursoDisciplinaRepository.save(cursoDisciplina);
-        Assertions.assertEquals(cursoDisciplinaService.buscarPorId(cursoDisciplina.getId()).getId(), cursoDisciplina.getId());
+        Assertions.assertEquals(cursoDisciplinaService.buscarModelPorId(cursoDisciplina.getId()).getId(), cursoDisciplina.getId());
     }
 
 }
