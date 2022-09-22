@@ -35,5 +35,8 @@ public class Aluno {
     @JoinColumn(name = "ENDERECO_ID")
     private Endereco endereco;
 
+    @OneToOne
+    @Column(name = "usuario_id")
+    private Usuario usuario;
 }
 
