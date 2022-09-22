@@ -30,8 +30,17 @@ INSERT INTO Nota VALUES (random_uuid(), 8, 'd9632725-f147-43f8-bc01-679fbc780297
 
 insert into Perfil values (random_uuid(), 'ROLE_PROFESSOR');
 insert into Perfil values (random_uuid(), 'ROLE_COORDENADOR');
+insert into Perfil values ('305c26d4-ccf5-408d-9751-34338dc71adb', 'ROLE_ALUNO');
+insert into Perfil values ('9b61c8cd-9b36-49fd-9dc7-323a06e0f80c', 'ROLE_SECRETARIA');
+
 insert into Usuario (id, account_non_expired, account_non_locked, credentials_non_expired, enabled, password, username) values (random_uuid(), true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'cristiano');
 insert into Usuario (id, account_non_expired, account_non_locked, credentials_non_expired, enabled, password, username) values (random_uuid(), true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'jack');
+insert into Usuario values ('0b5b90d6-8e4c-49a0-b488-8f0acfd4c3d1', true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'joao.p');
+insert into Usuario values ('e8691940-2887-4b85-92ef-26faea55291c', true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'secretaria');
+
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'jack', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_COORDENADOR');
+
+insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), '0b5b90d6-8e4c-49a0-b488-8f0acfd4c3d1', '305c26d4-ccf5-408d-9751-34338dc71adb');
+insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), 'e8691940-2887-4b85-92ef-26faea55291c', '9b61c8cd-9b36-49fd-9dc7-323a06e0f80c');

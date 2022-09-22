@@ -1,6 +1,7 @@
 package com.itau.escolaItauSpring.service;
 
 import com.itau.escolaItauSpring.dto.request.NotaRequest;
+import com.itau.escolaItauSpring.dto.request.NotaUpdateRequest;
 import com.itau.escolaItauSpring.dto.response.NotaResponse;
 import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.exception.NotaJaCadastradaException;
@@ -43,9 +44,9 @@ public class NotaService {
         return mapper.toResponse(nota);
     }
 
-    public NotaResponse atualizar(UUID id, NotaRequest notaRequest) {
+    public NotaResponse atualizar(UUID id, NotaUpdateRequest notaUpdateRequest) {
         Nota nota = buscarModelPorId(id);
-        nota.setNota(notaRequest.getNota());
+        nota.setNota(notaUpdateRequest.getNota());
         repository.save(nota);
         return mapper.toResponse(nota);
     }

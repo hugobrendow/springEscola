@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.controller;
 
 
 import com.itau.escolaItauSpring.dto.request.NotaRequest;
+import com.itau.escolaItauSpring.dto.request.NotaUpdateRequest;
 import com.itau.escolaItauSpring.dto.response.NotaResponse;
 import com.itau.escolaItauSpring.service.NotaService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/nota")
 @RequiredArgsConstructor
+@RolesAllowed({"ROLE_COORDENADOR", "ROLE_PROFESSOR", "ROLE_ALUNO", "ROLE_SECRETARIA"})
 public class NotaController {
 
     private final NotaService notaService;
@@ -31,6 +34,7 @@ public class NotaController {
 //    })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_PROFESSOR"})
     public ResponseEntity<NotaResponse> cadastrar(@RequestBody @Valid NotaRequest notaRequest, UriComponentsBuilder uriComponentsBuilder) {
         NotaResponse notaResponse = notaService.adicionar(notaRequest);
         URI uri = uriComponentsBuilder.path("/nota/{id}").buildAndExpand(notaResponse.getId()).toUri();
@@ -38,6 +42,7 @@ public class NotaController {
     }
 
     @GetMapping
+    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_PROFESSOR", "ROLE_SECRETARIA"})
     public ResponseEntity<List<NotaResponse>> listar() {
         return ResponseEntity.ok(notaService.listar());
     }
@@ -48,12 +53,14 @@ public class NotaController {
     }
 
     @PatchMapping("/{id}")
+    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_PROFESSOR"})
     public ResponseEntity<NotaResponse> atualizar(@PathVariable UUID id,
-              @RequestBody NotaRequest notaRequest) {
-        return ResponseEntity.ok(notaService.atualizar(id, notaRequest));
+              @RequestBody @Valid NotaUpdateRequest notaUpdateRequest) {
+        return ResponseEntity.ok(notaService.atualizar(id, notaUpdateRequest));
     }
 
     @DeleteMapping("/{id}")
+    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_PROFESSOR"})
     public ResponseEntity<Void> remover(@PathVariable UUID id) {
         notaService.remover(id);
         return ResponseEntity.noContent().build();

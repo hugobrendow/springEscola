@@ -10,9 +10,9 @@ import java.util.UUID;
 
 @Data
 public class NotaRequest {
-    @NotNull(message = "O id da matricula não pode ser nula")
+    @NotNull(message = "O id da matricula é obrigatório")
     private UUID matriculaId;
-    @NotNull(message = "O id do curso disciplina não pode ser nulo")
+    @NotNull(message = "O id do curso disciplina é obrigatório")
     private UUID cursoDisciplinaId;
 
     @Min(0)
