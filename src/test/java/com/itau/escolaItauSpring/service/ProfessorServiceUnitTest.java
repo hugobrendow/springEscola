@@ -114,7 +114,7 @@ public class ProfessorServiceUnitTest {
         Pageable pageable = Mockito.mock(Pageable.class);
         Page<Professor> professorPage = Mockito.mock(Page.class);
 
-        Mockito.when(professorRepository.findProfessorByNomeContainingIgnoreCaseOrCpfContainingOrNivel(any(String.class), any(String.class), any(NivelProfessorEnum.class), any(Pageable.class))).thenReturn(professorPage);
+        Mockito.when(professorRepository.findProfessorByNomeContainingIgnoreCaseOrCpfContainingOrNivel(any(), any(), any(), any(Pageable.class))).thenReturn(professorPage);
 
         List<ProfessorResponse> professorResponseList = new ArrayList<>();
         ProfessorResponse professorResponse = new ProfessorResponse();
@@ -122,9 +122,9 @@ public class ProfessorServiceUnitTest {
 
         Mockito.when(professorMapper.toResponseList(any(List.class))).thenReturn(professorResponseList);
 
-        List<ProfessorResponse> professorResponseListResult1 = professorService.filtro("Cl", "", NivelProfessorEnum.ADJUNTO, pageable);
-        List<ProfessorResponse> professorResponseListResult2 = professorService.filtro("" , "12",NivelProfessorEnum.ADJUNTO, pageable);
-        List<ProfessorResponse> professorResponseListResult3 = professorService.filtro("", "", NivelProfessorEnum.ADJUNTO, pageable);
+        List<ProfessorResponse> professorResponseListResult1 = professorService.filtro("Cl", null, null, pageable);
+        List<ProfessorResponse> professorResponseListResult2 = professorService.filtro(null , "12",null, pageable);
+        List<ProfessorResponse> professorResponseListResult3 = professorService.filtro(null, null, NivelProfessorEnum.ADJUNTO, pageable);
 
         Assertions.assertNotNull(professorResponseListResult1);
         Assertions.assertNotNull(professorResponseListResult2);

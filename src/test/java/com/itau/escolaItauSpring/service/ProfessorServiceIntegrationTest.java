@@ -92,10 +92,10 @@ public class ProfessorServiceIntegrationTest {
         ProfessorRequest professorRequest = buildProfessorRequest();
         ProfessorResponse professorAdicionado =  service.adicionar(professorRequest);
         UUID idProfessorAdicionado = professorAdicionado.getId();
-        ProfessorRequest professorRequest2 = buildProfessorRequest2();
-        service.atualizar(idProfessorAdicionado, professorRequest2);
+        professorRequest.setNome("Nome novo");
+        service.atualizar(idProfessorAdicionado, professorRequest);
         ProfessorResponse professorAtualizado = service.buscarPorId(idProfessorAdicionado);
-        Assertions.assertEquals(professorRequest2.getNome(), professorAtualizado.getNome());
+        Assertions.assertEquals(professorRequest.getNome(), professorAtualizado.getNome());
     }
 
     @Test
