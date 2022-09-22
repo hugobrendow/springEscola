@@ -72,9 +72,10 @@ class MatriculaServiceTest {
         when(matriculaRepository.findByAlunoIdAndTurmaId(any(), any())).thenReturn(Optional.empty());
         when(turmaService.verificarSeHaVagas(any())).thenReturn(false);
 
-        verify(turmaService, times(1)).verificarSeHaVagas(any());
+
         assertThrows(NaoHaVagasException.class,
                 () -> matriculaService.matricular(new MatriculaRequest()));
+        verify(turmaService, times(1)).verificarSeHaVagas(any());
     }
 
     @Test
@@ -141,7 +142,7 @@ class MatriculaServiceTest {
         when(matriculaRepository.save(any())).thenReturn(new Matricula());
         when(mapper.toResponse(any())).thenReturn(matriculaTrancada);
 
-        MatriculaResponse resultado = matriculaService.trancarMatricula(UUID.randomUUID());
+        MatriculaResponse resultado = matriculaService.ativarMatricula(UUID.randomUUID());
 
         assertEquals(StatusMatricula.TRANCADA, resultado.getStatus());
         verify(matriculaRepository, times(1)).findById(any(UUID.class));
