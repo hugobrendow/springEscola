@@ -36,7 +36,6 @@ INSERT INTO Aluno VALUES('0dca7292-3919-11ed-a261-0242ac120004','00000000444',cu
 INSERT INTO Aluno VALUES('0dca7292-3919-11ed-a261-0242ac120050','00000000555',current_date(),'marlon@gmail.com','Marlon','11987654241','d014f344-382f-11ed-a261-0242ac120043');
 INSERT INTO Aluno VALUES('0dca7292-3919-11ed-a261-0242ac120051','00000000666',current_date(),'paulo@gmail.com','Paulo','11987654241','d014f344-382f-11ed-a261-0242ac120044');
 
-INSERT INTO Matricula VALUES (random_uuid(), current_date(), 1, 'ATIVADA', 'd014f344-382f-11ed-a261-0242ac120006', 'd014f344-382f-11ed-a261-0242ac120003');
 INSERT INTO Matricula VALUES (random_uuid(), current_date(), 2, 'ATIVADA', '0dca7292-3919-11ed-a261-0242ac120002', 'd014f344-382f-11ed-a261-0242ac120030');
 INSERT INTO Matricula VALUES (random_uuid(), current_date(), 3, 'ATIVADA', '0dca7292-3919-11ed-a261-0242ac120003', 'd014f344-382f-11ed-a261-0242ac120031');
 INSERT INTO Matricula VALUES (random_uuid(), current_date(), 4, 'ATIVADA', '0dca7292-3919-11ed-a261-0242ac120004', 'd014f344-382f-11ed-a261-0242ac120032');
