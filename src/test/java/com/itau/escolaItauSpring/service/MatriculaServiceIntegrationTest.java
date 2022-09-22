@@ -37,14 +37,20 @@ class MatriculaServiceIntegrationTest {
 
     @Test
     public void testMatricularAluno() {
+        UUID idAluno = UUID.fromString("d014f344-382f-11ed-a261-0242ac120006");
+        UUID idTurma = UUID.fromString("d014f344-382f-11ed-a261-0242ac120003");
 
         MatriculaRequest request = new MatriculaRequest();
-        request.setIdTurma(UUID.fromString("d014f344-382f-11ed-a261-0242ac120003"));
-        request.setIdAluno(UUID.fromString("d014f344-382f-11ed-a261-0242ac120006"));
+        request.setIdTurma(idTurma);
+        request.setIdAluno(idAluno);
 
         MatriculaResponse resultado = matriculaService.matricular(request);
 
+        Assertions.assertNotNull(resultado.getId());
+        Assertions.assertEquals(resultado.getIdAluno(), idAluno);
+        Assertions.assertEquals(resultado.getIdTurma(), idTurma);
         Assertions.assertEquals(resultado.getStatus(), StatusMatricula.ATIVADA);
+
     }
 
 }

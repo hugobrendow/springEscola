@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.controller;
 
 import com.itau.escolaItauSpring.dto.request.MatriculaRequest;
 import com.itau.escolaItauSpring.dto.response.MatriculaResponse;
+import com.itau.escolaItauSpring.model.Usuario;
 import com.itau.escolaItauSpring.service.MatriculaService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -79,7 +81,7 @@ public class MatriculaController {
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/aluno/{idAluno}")
-    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_SECRETARIO", "ROLE_ALUNO", "ROLE_PROFESSOR"})
+    @RolesAllowed({"ROLE_COORDENADOR", "ROLE_SECRETARIO", "ROLE_PROFESSOR"})
     public ResponseEntity<List<MatriculaResponse>> listarPorAluno(@PathVariable UUID idAluno) {
         List<MatriculaResponse> matriculaResponse = matriculaService.listarPorAluno(idAluno);
         return ResponseEntity.ok(matriculaResponse);

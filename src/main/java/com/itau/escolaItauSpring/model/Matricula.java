@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,7 +16,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Audited
 public class Matricula {
 
     @Id
@@ -26,6 +26,7 @@ public class Matricula {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numero;
 
+    @Audited
     @Enumerated(EnumType.STRING)
     private StatusMatricula status = StatusMatricula.ATIVADA;
 

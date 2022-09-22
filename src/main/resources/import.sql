@@ -8,10 +8,16 @@ INSERT INTO Curso VALUES('d014f344-382f-11ed-a261-0242ac120013', 'Spring Boot 1'
 INSERT INTO Curso VALUES('d014f344-382f-11ed-a261-0242ac120012', 'Spring Boot 2', 'Spring Boot basico 2');
 INSERT INTO Curso VALUES('d014f344-382f-11ed-a261-0242ac120010', 'SQL 1', 'SQL Básico 1');
 INSERT INTO Curso VALUES('d014f344-382f-11ed-a261-0242ac120002', 'COBOL 1', 'COBOL Básico 1');
+insert into Perfil values (random_uuid(), 'ROLE_ALUNO');
+insert into Perfil values (random_uuid(), 'ROLE_SECRETARIO');
 insert into Perfil values (random_uuid(), 'ROLE_PROFESSOR');
 insert into Perfil values (random_uuid(), 'ROLE_COORDENADOR');
+insert into Usuario (id, account_non_expired, account_non_locked, credentials_non_expired, enabled, password, username) values (random_uuid(), true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'giovana');
+insert into Usuario (id, account_non_expired, account_non_locked, credentials_non_expired, enabled, password, username) values (random_uuid(), true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'ellen');
 insert into Usuario (id, account_non_expired, account_non_locked, credentials_non_expired, enabled, password, username) values (random_uuid(), true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'cristiano');
 insert into Usuario (id, account_non_expired, account_non_locked, credentials_non_expired, enabled, password, username) values (random_uuid(), true, true, true, true, '$2a$10$fwQJT.ABmklx9fNU3nunuO5Jkc7aloQK0UZQwVS0stt.Zg6y3hGxi', 'jack');
+insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'giovana', SELECT ID FROM Perfil WHERE permissao = 'ROLE_SECRETARIO');
+insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'ellen', SELECT ID FROM Perfil WHERE permissao = 'ROLE_ALUNO');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'jack', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_COORDENADOR');
