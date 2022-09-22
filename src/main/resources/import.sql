@@ -8,7 +8,7 @@ INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 1', 'Spring Boot basico 1')
 INSERT INTO Curso VALUES(random_uuid(), 'Spring Boot 2', 'Spring Boot basico 2');
 INSERT INTO Curso VALUES(random_uuid(), 'SQL 1', 'SQL Básico 1');
 INSERT INTO Curso VALUES(random_uuid(), 'COBOL 1', 'COBOL Básico 1');
-INSERT INTO Curso VALUES('1648719c-e211-4be7-b6af-a7ce2041aa3f', 'TESTE', 'TESTE BASICO');
+--INSERT INTO Curso VALUES('1648719c-e211-4be7-b6af-a7ce2041aa3f', 'TESTE', 'TESTE BASICO');
 
 INSERT INTO Aluno VALUES ('3211f571-fbd7-4700-a804-b4910def0660', '00011122233', '1995-05-05', 'joao.p@g.com', 'João Paulo', '22332233', null);
 INSERT INTO Aluno VALUES ('41b4fceb-2a64-4d8a-8c18-ac6f7caeedf9', '11122233344', '1998-08-08', 'maria.c@g.com', 'Maria Clara', '24242424', null);
