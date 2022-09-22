@@ -61,7 +61,7 @@ public class NotaController {
         return ResponseEntity.ok(notaService.listar());
     }
 
-    @ApiOperation(value = "Lista notas por ID")
+    @ApiOperation(value = "Listar notas por ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Nota encontrada com sucesso", response = CustomException.class),
             @ApiResponse(code = 401, message = "Usuário não autenticado"),
@@ -72,7 +72,7 @@ public class NotaController {
         return ResponseEntity.ok(notaService.buscarPorId(id));
     }
 
-    @ApiOperation(value = "Atualiza nota")
+    @ApiOperation(value = "Atualizar nota")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Nota atualizada com sucesso", response = CustomException.class),
             @ApiResponse(code = 401, message = "Usuário não autenticado"),
@@ -85,7 +85,7 @@ public class NotaController {
         return ResponseEntity.ok(notaService.atualizar(id, notaUpdateRequest));
     }
 
-    @ApiOperation(value = "Remove nota")
+    @ApiOperation(value = "Remover nota")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Nota excluida com sucesso", response = CustomException.class),
             @ApiResponse(code = 401, message = "Usuário não autenticado"),
@@ -98,7 +98,7 @@ public class NotaController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "Lista notas por Matricula")
+    @ApiOperation(value = "Listar notas por Matricula")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Nota encontrada com sucesso", response = CustomException.class),
             @ApiResponse(code = 401, message = "Usuário não autenticado"),
@@ -112,7 +112,7 @@ public class NotaController {
         return ResponseEntity.ok(notaService.listarPorMatricula(id));
     }
 
-    @ApiOperation(value = "Lista notas por CursoDisciplina")
+    @ApiOperation(value = "Listar notas por CursoDisciplina")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Nota encontrada com sucesso", response = CustomException.class),
             @ApiResponse(code = 401, message = "Usuário não autenticado"),
