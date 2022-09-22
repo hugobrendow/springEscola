@@ -3,6 +3,7 @@ package com.itau.escolaItauSpring.service;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaAlteracaoRequest;
 import com.itau.escolaItauSpring.dto.request.OcorrenciaRequest;
 import com.itau.escolaItauSpring.dto.response.OcorrenciaResponse;
+import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.exception.OcorrenciaNaoEncontradaException;
 import com.itau.escolaItauSpring.mapper.OcorrenciaMapper;
 import com.itau.escolaItauSpring.model.Ocorrencia;
@@ -52,7 +53,7 @@ public class OcorrenciaService {
     }
 
     private Ocorrencia buscarOcorrenciaPorId(UUID id) {
-        return ocorrenciaRepository.findById(id).orElseThrow(OcorrenciaNaoEncontradaException::new);
+        return ocorrenciaRepository.findById(id).orElseThrow(ItemNaoExistenteException::new);
     }
 
 }
