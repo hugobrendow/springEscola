@@ -3,18 +3,13 @@ package com.itau.escolaItauSpring.service;
 import com.itau.escolaItauSpring.ModelFactory;
 import com.itau.escolaItauSpring.dto.request.VinculaCursoRequest;
 import com.itau.escolaItauSpring.dto.response.VinculaCursoResponse;
-import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
-import com.itau.escolaItauSpring.mapper.ProfessorCursoDisciplinaMapper;
 import com.itau.escolaItauSpring.model.*;
 import com.itau.escolaItauSpring.repository.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @SpringBootTest
@@ -44,7 +39,10 @@ public class ProfessorCursoDisciplinaServiceIntegrationTest {
         professorRepository.save(professor);
 
         Disciplina disciplina = ModelFactory.disciplina();
+        disciplina.setId(null);
+
         Curso curso = ModelFactory.curso();
+        curso.setId(null);
 
         disciplinaRepository.save(disciplina);
         cursoRepository.save(curso);

@@ -17,7 +17,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.util.Optional;
 
@@ -52,7 +51,6 @@ public class ProfessorCursoDisciplinaServiceTest {
         assertThrows(ItemNaoExistenteException.class, () -> professorCursoDisciplinaService.vincularCurso(vinculaCursoRequest));
     }
 
-    //TODO Corrigir mapper
     @Test
     @DisplayName("Deve vincular um professor a uma disciplina")
     public void aoVincularCursoRetornaSucesso(){

@@ -30,7 +30,9 @@ public class CursoDisciplinaServiceIntegrationTest {
     @Test
     public void buscarPorIdTest() {
         Curso curso = ModelFactory.curso();
+        curso.setId(null);
         Disciplina disciplina = ModelFactory.disciplina();
+        disciplina.setId(null);
         cursoRepository.save(curso);
         disciplinaRepository.save(disciplina);
         CursoDisciplina cursoDisciplina = new CursoDisciplina();
