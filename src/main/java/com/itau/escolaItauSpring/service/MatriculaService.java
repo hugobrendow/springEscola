@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,11 +39,26 @@ public class MatriculaService {
         validarMatriculaJaExistente(aluno.getId(), idTurma);
         validarSeHaVagas(idTurma);
 
-        Matricula matriculaSalva = repository.save(new Matricula(aluno, turma));
+        Matricula matriculaSalva = repository.save(gerarMatricula(aluno, turma));
 
         turmaService.atualizarVagas(idTurma);
 
         return mapper.toResponse(matriculaSalva);
+    }
+
+    private String gerarCodigoMatricula(LocalDate data){
+        return new StringBuilder()
+                .append(data.getYear())
+                .append(data.getMonthValue())
+                .append(data.getDayOfMonth())
+                .append(repository.countByData(data))
+                .toString();
+    }
+
+    private Matricula gerarMatricula(Aluno aluno, Turma turma){
+        Matricula matricula = new Matricula(aluno, turma);
+        matricula.setCodigo(gerarCodigoMatricula(matricula.getData()));
+        return matricula;
     }
 
     private void validarSeHaVagas(UUID idTurma) {

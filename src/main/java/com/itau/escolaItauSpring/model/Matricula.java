@@ -4,7 +4,6 @@ import com.itau.escolaItauSpring.enums.StatusMatricula;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.envers.Audited;
 
@@ -23,15 +22,13 @@ public class Matricula {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long numero;
+    private String codigo;
 
     @Audited
     @Enumerated(EnumType.STRING)
     private StatusMatricula status = StatusMatricula.ATIVADA;
 
-    @CreationTimestamp
-    private LocalDate data;
+    private LocalDate data = LocalDate.now();
 
     @ManyToOne
     private Aluno aluno;

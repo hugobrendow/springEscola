@@ -12,7 +12,7 @@ public class MatriculaResponse {
 
     private UUID id;
 
-    private Long numero;
+    private String codigo;
 
     private StatusMatricula status;
 
