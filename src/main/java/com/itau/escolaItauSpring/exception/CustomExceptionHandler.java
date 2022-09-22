@@ -59,7 +59,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         List<String> detalhes = ex.getBindingResult().getAllErrors().stream()
                 .map(obj -> obj.getDefaultMessage())
                 .collect(Collectors.toList());
-        return handleExceptionInternal(ex, new CustomException(detalhes, HttpStatus.BAD_REQUEST.value()),
-                new HttpHeaders(), HttpStatus.CONFLICT, request);
+        return handleExceptionInternal(ex, new CustomException(detalhes, HttpStatus.UNPROCESSABLE_ENTITY.value()),
+                new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
     }
 }
