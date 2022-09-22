@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.exception;
 
 import com.itau.escolaItauSpring.dto.exception.CustomException;
 import feign.FeignException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> detalhes = ex.getBindingResult().getAllErrors().stream()
-                .map(obj -> obj.getDefaultMessage())
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
         return handleExceptionInternal(ex, new CustomException(detalhes, HttpStatus.BAD_REQUEST.value()),
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
