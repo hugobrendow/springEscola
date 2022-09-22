@@ -61,12 +61,23 @@ public class NotaController {
         return ResponseEntity.ok(notaService.listar());
     }
 
-
+    @ApiOperation(value = "Listar notas por ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Nota encontrada com sucesso", response = CustomException.class),
+            @ApiResponse(code = 401, message = "Usuário não autenticado"),
+            @ApiResponse(code = 404, message = "Nota não encontrada"),
+    })
     @GetMapping("/{id}")
     public ResponseEntity<NotaResponse> buscarPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(notaService.buscarPorId(id));
     }
 
+    @ApiOperation(value = "Atualizar nota")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Nota atualizada com sucesso", response = CustomException.class),
+            @ApiResponse(code = 401, message = "Usuário não autenticado"),
+            @ApiResponse(code = 403, message = "É necessario ter permissão Coordenador ou Professor"),
+    })
     @PatchMapping("/{id}")
     @RolesAllowed({"ROLE_COORDENADOR", "ROLE_PROFESSOR"})
     public ResponseEntity<NotaResponse> atualizar(@PathVariable UUID id,
@@ -74,6 +85,12 @@ public class NotaController {
         return ResponseEntity.ok(notaService.atualizar(id, notaUpdateRequest));
     }
 
+    @ApiOperation(value = "Remover nota")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Nota excluida com sucesso", response = CustomException.class),
+            @ApiResponse(code = 401, message = "Usuário não autenticado"),
+            @ApiResponse(code = 403, message = "É necessario ter permissão Coordenador ou Professor"),
+    })
     @DeleteMapping("/{id}")
     @RolesAllowed({"ROLE_COORDENADOR", "ROLE_PROFESSOR"})
     public ResponseEntity<Void> remover(@PathVariable UUID id) {
@@ -81,6 +98,13 @@ public class NotaController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Listar notas por Matricula")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Nota encontrada com sucesso", response = CustomException.class),
+            @ApiResponse(code = 401, message = "Usuário não autenticado"),
+            @ApiResponse(code = 403, message = "É necessario ter permissão Coordenador ou Professor"),
+            @ApiResponse(code = 404, message = "Nota não encontrada"),
+    })
     @GetMapping("/matricula/{id}")
     //@RolesAllowed("ROLE_ALUNO")
     public ResponseEntity<List<NotaResponse>> listarPorMatricula(@PathVariable UUID id) {
@@ -88,6 +112,13 @@ public class NotaController {
         return ResponseEntity.ok(notaService.listarPorMatricula(id));
     }
 
+    @ApiOperation(value = "Listar notas por CursoDisciplina")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Nota encontrada com sucesso", response = CustomException.class),
+            @ApiResponse(code = 401, message = "Usuário não autenticado"),
+            @ApiResponse(code = 403, message = "É necessario ter permissão Coordenador ou Professor"),
+            @ApiResponse(code = 404, message = "Nota não encontrada"),
+    })
     @GetMapping("/curso-disciplina/{id}")
     public ResponseEntity<List<NotaResponse>> listarPorCursoDisciplina(@PathVariable UUID id) {
         return ResponseEntity.ok(notaService.listarPorCursoDisciplina(id));
