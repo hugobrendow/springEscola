@@ -14,4 +14,5 @@ public class ProfessorResponse {
     private String email;
     private String telefone;
     private NivelProfessorEnum nivel;
+    private UsuarioResponse usuario;
 }

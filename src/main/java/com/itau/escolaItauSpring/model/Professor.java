@@ -27,7 +27,8 @@ public class Professor {
     private String telefone;
     private LocalDate dataAdmissao;
     @OneToOne(cascade = CascadeType.ALL)
-
     private Endereco endereco;
     private NivelProfessorEnum nivel;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Usuario usuario;
 }

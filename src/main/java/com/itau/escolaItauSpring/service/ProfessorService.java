@@ -6,10 +6,17 @@ import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
 import com.itau.escolaItauSpring.exception.ItemNaoExistenteException;
 import com.itau.escolaItauSpring.mapper.ProfessorMapper;
 import com.itau.escolaItauSpring.model.Professor;
+import com.itau.escolaItauSpring.model.Usuario;
 import com.itau.escolaItauSpring.repository.ProfessorRepository;
+import com.itau.escolaItauSpring.security.SecurityConfiguration;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +27,11 @@ import java.util.UUID;
 public class ProfessorService {
     private final ProfessorMapper mapper;
     private final ProfessorRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     public ProfessorResponse adicionar(ProfessorRequest professorRequest){
+        Usuario usuario = professorRequest.getUsuario();
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         Professor professor = mapper.toModel(professorRequest);
         return mapper.toResponse(repository.save(professor));
     }
@@ -60,6 +70,10 @@ public class ProfessorService {
     }
     public void limparBanco() {
         repository.deleteAll();
+    }
+
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }

@@ -3,6 +3,7 @@ package com.itau.escolaItauSpring.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itau.escolaItauSpring.config.Telefone;
 import com.itau.escolaItauSpring.enums.NivelProfessorEnum;
+import com.itau.escolaItauSpring.model.Usuario;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -33,4 +34,6 @@ public class ProfessorRequest {
     private EnderecoRequest endereco;
     @NotNull(message = "O nível do professor não pode ser nulo")
     private NivelProfessorEnum nivel;
+    @NotNull(message = "O usuário do professor não pode ser nulo")
+    private Usuario usuario;
 }
