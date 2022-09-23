@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -75,5 +77,17 @@ public class UsuarioService implements UserDetailsService {
 
     public Usuario buscarPorId(UUID id) {
         return repository.findById(id).orElseThrow(() -> new ItemNaoExistenteException("Usuario não encontrado"));
+    }
+
+    public Usuario buscarPorUsername(String username) {
+        return repository.findByUsername(username).orElseThrow(ItemNaoExistenteException::new);
+    }
+
+    public Usuario buscarUsuarioAtual() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        Usuario usuario = buscarPorUsername(currentPrincipalName);
+        return usuario;
+
     }
 }

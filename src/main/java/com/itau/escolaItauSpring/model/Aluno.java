@@ -34,6 +34,9 @@ public class Aluno {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ENDERECO_ID")
     private Endereco endereco;
-
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USUARIO_ID")
+    private Usuario usuario;
 }
 
