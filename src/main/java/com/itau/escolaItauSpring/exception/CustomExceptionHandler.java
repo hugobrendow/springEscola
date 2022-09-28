@@ -2,6 +2,7 @@ package com.itau.escolaItauSpring.exception;
 
 import com.itau.escolaItauSpring.dto.exception.CustomException;
 import feign.FeignException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,4 +49,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, new CustomException(detalhes, HttpStatus.BAD_REQUEST.value()),
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
+
+//    @ExceptionHandler(ExpiredJwtException.class)
+//    protected ResponseEntity<String> handlerExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
+//        CustomException exceptionDetail = new CustomException(List.of(ex.getMessage()), HttpStatus.BAD_REQUEST.value());
+//        return handleExceptionInternal(ex, exceptionDetail,
+//                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+//    }
 }
