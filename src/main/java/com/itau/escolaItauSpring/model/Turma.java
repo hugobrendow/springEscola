@@ -28,3 +28,4 @@ public class Turma {
     @ManyToOne
     private Curso curso;
 }
+

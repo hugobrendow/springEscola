@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, UUID> {
-
     @Query("select c from Curso c where c.nome like %:nome%")
     Page<Curso> findByNome(String nome, Pageable pageable);
 }

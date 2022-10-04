@@ -35,5 +35,7 @@ public class Aluno {
     @JoinColumn(name = "ENDERECO_ID")
     private Endereco endereco;
 
+
+
 }
 

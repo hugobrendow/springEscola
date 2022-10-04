@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class DistritoRestTemplateService {
 
     private RestTemplate restTemplate;
-    private final static String URL = "https://servicodados.ibge.gov.br/api/v1/localidades/distritos";
+    private static final String URL = "https://servicodados.ibge.gov.br/api/v1/localidades/distritos";
 
     public DistritoRestTemplateService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
