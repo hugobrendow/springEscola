@@ -1,5 +1,6 @@
 package com.itau.escolaItauSpring.dto.request;
 
+import com.itau.escolaItauSpring.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
