@@ -1,4 +1,4 @@
-INSERT INTO Curso VALUES(random_uuid(), 'Java 1', 'Java basico 1');
+INSERT INTO Curso VALUES('4d933b83-b79a-492e-93ba-ef1b22eeb6f6', 'Java 1', 'Java basico 1');
 INSERT INTO Curso VALUES(random_uuid(), 'Java 2', 'Java basico 2');
 INSERT INTO Curso VALUES(random_uuid(), 'PHP 1', 'PHP basico 1');
 INSERT INTO Curso VALUES(random_uuid(), 'PHP 2', 'PHP basico 2');
@@ -15,3 +15,17 @@ insert into Usuario (id, account_non_expired, account_non_locked, credentials_no
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'jack', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_PROFESSOR');
 insert into Usuario_Perfil (id, usuario_id, perfil_id) values (random_uuid(), SELECT id FROM Usuario WHERE USERNAME = 'cristiano', SELECT ID FROM Perfil WHERE permissao = 'ROLE_COORDENADOR');
+
+
+
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES('0a063e4e-f200-46ee-8cef-d91b624595eb', 'POO 1', 20);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES('f995f890-c412-4159-bd7c-5bb8c1995d2a', 'POO 2', 20);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 1', 30);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 2', 40);
+INSERT INTO DISCIPLINA(ID, NOME, CARGA_HORARIA) VALUES(random_uuid(), 'Logica 3', 60);
+
+INSERT INTO ENDERECO VALUES ('94c48174-95f4-4876-8594-a5188fae38d0' , '123445', 'limeira', 'aaaa', 'sp', 'av brasil', 200)
+INSERT INTO PROFESSOR VALUES ('4673bc2e-3a8c-11ed-a261-0242ac120002',  '111111', parsedatetime('12-10-2022', 'dd-MM-yyyy'),  'professor@gmail.com', 1, 'professor', '19993072484', '94c48174-95f4-4876-8594-a5188fae38d0');
+
+INSERT INTO CURSO_DISCIPLINA VALUES ('7eb7a92f-618a-4588-8767-48c08c28ee7f', '4d933b83-b79a-492e-93ba-ef1b22eeb6f6', '0a063e4e-f200-46ee-8cef-d91b624595eb');
+INSERT INTO CURSO_DISCIPLINA VALUES ('3c20732f-a0ab-4663-9625-c839a42254db', '4d933b83-b79a-492e-93ba-ef1b22eeb6f6', 'f995f890-c412-4159-bd7c-5bb8c1995d2a');
